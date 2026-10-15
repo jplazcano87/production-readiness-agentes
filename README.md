@@ -242,6 +242,10 @@ La cita vive en [`CITATION.cff`](CITATION.cff), que es de donde la toma GitHub:
 > Informe de Actividad de Graduación, Magíster en Inteligencia Artificial, Pontificia
 > Universidad Católica de Chile.
 
+El software está archivado en Zenodo y tiene DOI. Para citar **cualquier versión**, el de todas:
+[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). Para citar **esta**, el de la versión 1.0.0:
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717).
+
 ## Licencia
 
 MIT. Ver [`LICENSE`](LICENSE). Aplica al código, al corpus y a los resultados.

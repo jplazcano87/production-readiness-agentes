@@ -240,6 +240,10 @@ thesis is in Spanish, so its title is given as it is, with a translation in brac
 > and regulatory compliance for ecommerce]. Graduation report, Master in Artificial
 > Intelligence, Pontificia Universidad Católica de Chile.
 
+The software is archived on Zenodo and has a DOI. To cite **any version**, use the concept DOI:
+[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). To cite **this one**, use the DOI of version 1.0.0:
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717).
+
 ## License
 
 MIT. See [`LICENSE`](LICENSE). It applies to the code, the corpus and the results.
