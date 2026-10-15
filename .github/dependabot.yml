@@ -1,0 +1,20 @@
+# Solo las acciones de GitHub, y una vez al mes.
+#
+# No hay ecosistema `pip` a propósito, por dos razones. `pyproject.toml` declara mínimos y deja
+# resolver, así que no hay versiones que actualizar ahí. Y `requirements-lock.txt` **no es una
+# lista de dependencias que mantener**: es el registro del entorno con que se midió, está en
+# `docs/MANIFIESTO_ARTEFACTOS.json` como artefacto congelado, y un pull request que lo
+# modifique falla en el CI. Dependabot sobre la raíz lo reconocería como un `requirements.txt`
+# cualquiera y propondría justamente eso.
+#
+# Mensual y no semanal: con las mediciones cerradas, un pull request de dependencias cada semana
+# es ruido que nadie revisa.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"

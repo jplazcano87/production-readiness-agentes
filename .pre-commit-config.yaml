@@ -1,0 +1,55 @@
+# Comprobaciones que corren antes de cada commit. Las mismas que la compuerta de un pull
+# request, menos las que tardan: `pytest` y `scripts/verificar_equivalencia.py` no van aquí
+# porque un gancho que tarda medio minuto se acaba desactivando, y un gancho desactivado no
+# comprueba nada. Esos dos van en el CI.
+#
+#     pre-commit install          # una vez, por clon
+#     pre-commit run --all-files  # para pasarlo sobre todo el árbol
+#
+# Las revisiones van **fijadas**: `pre-commit autoupdate` las mueve, y moverlas sin querer
+# cambiaría el formato de archivos que este repositorio compara byte a byte.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # Un artefacto grande que entra sin querer no se nota en la revisión y después cuesta
+      # sacarlo del historial. El tope es alto a propósito: aquí hay transcripciones de
+      # verdad, y la mayor del repositorio pesa 1,5 MB.
+      - id: check-added-large-files
+        args: ["--maxkb=5120"]
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      # Dos archivos que difieran solo en mayúsculas rompen un clon en macOS o Windows.
+      - id: check-case-conflict
+      # Nunca se ha commiteado una clave y la idea es que siga siendo así.
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+      - id: ruff-check
+        args: ["--fix"]
+      - id: ruff-format
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+# Los archivos congelados no pasan por los ganchos que reescriben. `end-of-file-fixer` y
+# `trailing-whitespace` editan el archivo para arreglarlo, y editar un artefacto medido
+# cambia su hash: el verificador de equivalencia lo rechazaría, pero para entonces el cambio
+# ya estaría hecho. Es más limpio que no lleguen a tocarlo.
+exclude: |
+  (?x)^(
+    data/corpus/.*|
+    data/splits/.*|
+    results/.*|
+    docs/MANIFIESTO_ARTEFACTOS\.json|
+    docs/SALIDA_DE_HERRAMIENTAS\.json|
+    data/annotation/.*
+  )$

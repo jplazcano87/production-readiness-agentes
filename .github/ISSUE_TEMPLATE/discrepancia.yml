@@ -1,0 +1,52 @@
+name: Discrepancia en un resultado
+description: Una cifra publicada no te sale igual al reproducirla.
+labels: ["discrepancia"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Este es el issue más valioso del repositorio. Las mediciones están cerradas y los
+        artefactos congelados, así que una cifra que no se reproduce es una de dos cosas: un
+        defecto que hay que registrar, o algo que la documentación no explica. Las dos interesan.
+  - type: input
+    id: cifra
+    attributes:
+      label: Qué cifra
+      description: El número publicado y dónde lo leíste.
+      placeholder: "pass^8 de `cte` = 0,952, en el README"
+    validations:
+      required: true
+  - type: input
+    id: archivo
+    attributes:
+      label: De qué archivo de `results/` sale
+      description: "`docs/CIFRAS_INFORME.md` dice, para cada cifra, de qué archivo sale."
+      placeholder: "results/e1_baseline.json → resultados.cte.global.pass^8.valor"
+    validations:
+      required: true
+  - type: textarea
+    id: que-obtuviste
+    attributes:
+      label: Qué obtuviste tú
+      description: El comando y su salida.
+      render: shell
+    validations:
+      required: true
+  - type: checkboxes
+    id: sin-api
+    attributes:
+      label: Qué comprobaste antes
+      options:
+        - label: "`python scripts/verificar_equivalencia.py` pasa, así que los artefactos congelados son los publicados"
+        - label: "`python scripts/verificar_equivalencia.py --completo` pasa, así que los derivados se rehacen igual"
+        - label: "La discrepancia aparece en un paso que no llama a la API"
+  - type: textarea
+    id: entorno
+    attributes:
+      label: Entorno
+      description: >-
+        Sistema operativo, arquitectura, versión de Python y, si puedes, la salida de
+        `uv pip freeze`. Para las cifras que vienen de una corrida con API, el modelo puede
+        haber cambiado de versión: eso está declarado como limitación.
+    validations:
+      required: true

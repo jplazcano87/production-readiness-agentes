@@ -1,0 +1,101 @@
+# Integración continua: lo mismo que la compuerta local, en Linux y en dos versiones de Python.
+#
+# Dos decisiones que conviene leer antes de cambiar algo aquí:
+#
+# - **Las acciones van fijadas por SHA completo**, con la versión en el comentario de al lado.
+#   Una etiqueta como `v7` la puede mover quien publica la acción, y en ese momento el CI deja
+#   de ejecutar lo que alguien revisó. Al actualizar, se cambian el SHA y el comentario.
+# - **El bloqueo entra como restricción, no como lista de instalación.** `requirements-lock.txt`
+#   se generó en macOS arm64, así que instalarlo tal cual en Linux no tiene sentido; usarlo con
+#   `-c` fija la versión de lo que se instale sin obligar a instalar nada. El trabajo de
+#   equivalencia lo usa, porque compara figuras píxel a píxel y eso depende de la versión de la
+#   pila de dibujo. La matriz de pruebas resuelve desde `pyproject.toml`, que declara mínimos,
+#   que es lo que hace quien instala el paquete. Lo que el bloqueo puede y no puede afirmar
+#   está en `docs/REPRODUCIBILIDAD.md`.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Solo lectura del repositorio: ningún trabajo de este archivo escribe nada.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruebas:
+    name: Pruebas y estilo (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Instalar
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev]"
+      - name: ruff check
+        run: ruff check .
+      - name: ruff format --check
+        run: ruff format --check .
+      - name: pytest
+        # La suite entera corre sin red y sin clave: no hay secretos que pasar.
+        run: pytest -q
+
+  equivalencia:
+    name: Artefactos congelados y equivalencia
+    # Imagen fijada, no `ubuntu-latest`: este trabajo compara las figuras píxel a píxel, y la
+    # imagen del runner es parte de lo que determina el resultado. Que cambie sola el día que
+    # GitHub mueva la etiqueta convertiría una comparación en una sorpresa. Se actualiza a
+    # mano, viendo qué cambia.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Instalar con el bloqueo como restricción
+        # `-c` fija versiones sin obligar a instalar lo que es solo de macOS. Las 40 versiones
+        # del bloqueo tienen rueda para Linux y Python 3.11, comprobado antes de escribir esto.
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -c requirements-lock.txt -e ".[dev]"
+      - name: Huellas de los artefactos congelados
+        run: python scripts/verificar_equivalencia.py
+      - name: Equivalencia completa, los doce pasos
+        # Copia el árbol a un directorio temporal, crea allí su propio entorno virtual con el
+        # paquete instalado no editable, rehace los artefactos derivados y los compara. Necesita
+        # red para instalar ese entorno, no para medir: ningún paso llama a la API.
+        run: python scripts/verificar_equivalencia.py --completo
+
+  secretos:
+    name: Escaneo de secretos
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # La acción lista los commits del pull request para saber qué revisar, y sin esto el
+      # token no la deja: falla con «Resource not accessible by integration». Va aquí, en el
+      # trabajo que lo necesita, y no arriba, donde lo heredarían los otros tres.
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # gitleaks revisa el historial, así que necesita todo el historial que haya.
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Sin comentarios en el pull request: escribirlos pediría permiso de escritura, y el
+          # hallazgo ya sale en el registro del trabajo, que es donde se mira.
+          GITLEAKS_ENABLE_COMMENTS: "false"

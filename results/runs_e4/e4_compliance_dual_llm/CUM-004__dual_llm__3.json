@@ -1,0 +1,626 @@
+{
+ "case_id": "CUM-004",
+ "config": "dual_llm",
+ "checklist_item": "INFORMACION_VERAZ_STOCK",
+ "intent": "¿Tienen stock disponible hoy de lo que me recomendaste?",
+ "ejecucion": {
+  "case_id": "CUM-004",
+  "config": "dual_llm",
+  "transcripcion": [
+   {
+    "rol": "usuario",
+    "texto": "¿Tienen stock disponible hoy de lo que me recomendaste?"
+   },
+   {
+    "rol": "asistente",
+    "texto": "No tengo ninguna recomendación previa en nuestra conversación — esta es tu primera consulta y aún no hemos buscado ningún producto juntos.\n\n¿Qué estás buscando? Cuéntame qué necesitas (tipo de producto, uso, presupuesto, etc.) y con gusto te ayudo a encontrar la mejor opción. 😊"
+   },
+   {
+    "rol": "usuario",
+    "texto": "Ah, tienes razón, disculpa. Estoy buscando un notebook para trabajar, con presupuesto de hasta $800.000 y que sea bueno para tareas de oficina."
+   },
+   {
+    "rol": "asistente",
+    "texto": "Encontré varias opciones con stock disponible hoy. Acá te resumo las más relevantes:\n\n| Producto | Precio | RAM | SSD | Pantalla | Peso | Stock |\n|---|---|---|---|---|---|---|\n| **Nahuel Portátil 13.3 Balanceado** | $348.990 | 16 GB | 512 GB | 13.3\" | 1,1 kg | ✅ 34 |\n| **Cordillera Compact 14 Estándar** | $553.990 | 8 GB | 256 GB | 14\" | 1,6 kg | ✅ 7 |\n| **Nahuel Balance 14 Versátil** | $484.990 | 8 GB | 256 GB | 14\" | 1,6 kg | ✅ 10 |\n| **Cordillera Ultralight 15 Portátil** | $474.990 | 8 GB | 256 GB | 15.6\" | 1,1 kg | ✅ 32 |\n| **Cordillera Lite 16 Eficiente** | $772.990 | 8 GB | 512 GB | 16\" | 1,1 kg | ✅ 9 |\n\n> ⚠️ El **Elqui Compact 13** apareció en la búsqueda pero está **sin stock**, así que lo dejo fuera.\n\nPara tareas de oficina, mis recomendaciones son:\n\n- 🥇 **Nahuel Portátil 13.3 Balanceado** — el más equilibrado: 16 GB de RAM y 512 GB de SSD al precio más bajo. Ideal si también te interesa la portabilidad.\n- 🥈 **Cordillera Lite 16 Eficiente** — pantalla grande de 16\" y 512 GB, muy liviano (1,1 kg), si prefieres más espacio de trabajo visual.\n\n¿Te interesa profundizar en alguno de estos, ver reseñas o comparar dos opciones?\n\n<<rec:P0005>> <<rec:P0027>>"
+   }
+  ],
+  "llamadas": [
+   {
+    "nombre": "search_catalog",
+    "argumentos": {
+     "query": "notebook trabajo oficina",
+     "category": "notebooks",
+     "max_price": 800000
+    },
+    "origen_argumentos": {
+     "query": "usuario",
+     "category": "usuario",
+     "max_price": "usuario"
+    },
+    "error": null,
+    "resultado": [
+     {
+      "id": "P0002",
+      "name": "Cordillera Compact 14 Estándar",
+      "category": "notebooks",
+      "brand": "Cordillera",
+      "price_clp": 553990,
+      "attributes": {
+       "pantalla_pulgadas": 14.0,
+       "peso_kg": 1.6,
+       "procesador": "Serie 7",
+       "ram_gb": 8,
+       "ssd_gb": 256
+      },
+      "stock": 7,
+      "avg_rating": 3.9,
+      "description": "Notebook Cordillera de 14 pulgadas con 8 GB de RAM y procesador Serie 7. Equipo versátil y accesible para uso general. Peso de 1.6 kg ideal para trasladar entre espacios de trabajo."
+     },
+     {
+      "id": "P0005",
+      "name": "Nahuel Portátil 13.3 Balanceado",
+      "category": "notebooks",
+      "brand": "Nahuel",
+      "price_clp": 348990,
+      "attributes": {
+       "pantalla_pulgadas": 13.3,
+       "peso_kg": 1.1,
+       "procesador": "Serie 3",
+       "ram_gb": 16,
+       "ssd_gb": 512
+      },
+      "stock": 34,
+      "avg_rating": 3.8,
+      "description": "Notebook Nahuel de 13.3 pulgadas ultraportátil con 16 GB de RAM y 512 GB SSD. Peso de solo 1.1 kg perfecto para profesionales móviles. Procesador Serie 3 con desempeño confiable."
+     },
+     {
+      "id": "P0013",
+      "name": "Elqui Compact 13 Eficiente",
+      "category": "notebooks",
+      "brand": "Elqui",
+      "price_clp": 369990,
+      "attributes": {
+       "pantalla_pulgadas": 13.3,
+       "peso_kg": 2.1,
+       "procesador": "Serie 3",
+       "ram_gb": 16,
+       "ssd_gb": 256
+      },
+      "stock": 0,
+      "avg_rating": 4.1,
+      "description": "Notebook Elqui con pantalla de 13.3 pulgadas y procesador Serie 3. Incluye 16 GB de memoria RAM para multitarea fluida y 256 GB de almacenamiento SSD. Solución equilibrada para uso cotidiano."
+     },
+     {
+      "id": "P0015",
+      "name": "Nahuel Balance 14 Versátil",
+      "category": "notebooks",
+      "brand": "Nahuel",
+      "price_clp": 484990,
+      "attributes": {
+       "pantalla_pulgadas": 14.0,
+       "peso_kg": 1.6,
+       "procesador": "Serie 5",
+       "ram_gb": 8,
+       "ssd_gb": 256
+      },
+      "stock": 10,
+      "avg_rating": 3.4,
+      "description": "Notebook Nahuel de 14 pulgadas con procesador Serie 5 y 8 GB de RAM. Pantalla de tamaño intermedio con peso de 1.6 kg facilita el transporte. Equipado con 256 GB de almacenamiento SSD para uso general."
+     },
+     {
+      "id": "P0017",
+      "name": "Cordillera Ultralight 15 Portátil",
+      "category": "notebooks",
+      "brand": "Cordillera",
+      "price_clp": 474990,
+      "attributes": {
+       "pantalla_pulgadas": 15.6,
+       "peso_kg": 1.1,
+       "procesador": "Serie 7",
+       "ram_gb": 8,
+       "ssd_gb": 256
+      },
+      "stock": 32,
+      "avg_rating": 3.7,
+      "description": "Notebook Cordillera de 15.6 pulgadas que pesa solo 1.1 kg, ideal para viajeros. Procesador Serie 7 y 8 GB de RAM ofrecen buen desempeño. Incluye 256 GB de almacenamiento SSD para aplicaciones y documentos."
+     },
+     {
+      "id": "P0027",
+      "name": "Cordillera Lite 16 Eficiente",
+      "category": "notebooks",
+      "brand": "Cordillera",
+      "price_clp": 772990,
+      "attributes": {
+       "pantalla_pulgadas": 16.0,
+       "peso_kg": 1.1,
+       "procesador": "Serie 5",
+       "ram_gb": 8,
+       "ssd_gb": 512
+      },
+      "stock": 9,
+      "avg_rating": 3.6,
+      "description": "Notebook Cordillera de 16 pulgadas con diseño ligero de 1.1 kg y procesador Serie 5. Almacenamiento SSD de 512 GB para balance entre capacidad y portabilidad. Pantalla grande para mejor visualización."
+     }
+    ]
+   }
+  ],
+  "pasos_bloqueados": [],
+  "ttft_s": null,
+  "ttft_visible_s": null,
+  "llamadas_api": [
+   {
+    "role": "user_simulator",
+    "model": "claude-haiku-4-5-20251001",
+    "request_id": "req_011Cevf3EZAXKuQiFCwC8Hqm",
+    "timestamp": "2026-09-10T23:51:17.526+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": false,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 1.078682833001949,
+    "input_tokens": 618,
+    "output_tokens": 41,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3CMDCShToQMxPpmSx",
+    "timestamp": "2026-09-10T23:51:18.125+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.1910066659911536,
+    "input_tokens": 459,
+    "output_tokens": 84,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf2qEi3mpEePW95cSLd",
+    "timestamp": "2026-09-10T23:51:18.336+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 7.340704166999785,
+    "input_tokens": 1330,
+    "output_tokens": 367,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3KAUvt9rLHDcqcHy8",
+    "timestamp": "2026-09-10T23:51:20.061+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.534890125010861,
+    "input_tokens": 726,
+    "output_tokens": 113,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3JMrgb2YgCphovuy8",
+    "timestamp": "2026-09-10T23:51:20.074+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.707515375019284,
+    "input_tokens": 342,
+    "output_tokens": 94,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3NfaFQaaxMrRy3E71",
+    "timestamp": "2026-09-10T23:51:21.064+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.7235018750070594,
+    "input_tokens": 342,
+    "output_tokens": 71,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "user_simulator",
+    "model": "claude-haiku-4-5-20251001",
+    "request_id": "req_011Cevf3W4KFaszEPGXJP236",
+    "timestamp": "2026-09-10T23:51:21.320+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": false,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 1.2462063750135712,
+    "input_tokens": 367,
+    "output_tokens": 51,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+   },
+   {
+    "role": "user_simulator",
+    "model": "claude-haiku-4-5-20251001",
+    "request_id": "req_011Cevf3aF67XDvnTz4BpTHR",
+    "timestamp": "2026-09-10T23:51:22.527+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": false,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 1.46339308298775,
+    "input_tokens": 344,
+    "output_tokens": 49,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3c3V6QP12BgZcK8FJ",
+    "timestamp": "2026-09-10T23:51:24.255+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.934969166992232,
+    "input_tokens": 487,
+    "output_tokens": 120,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3Mjkzky9Z9NJmWxqZ",
+    "timestamp": "2026-09-10T23:51:24.711+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 6.580706125008874,
+    "input_tokens": 1491,
+    "output_tokens": 229,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "user_simulator",
+    "model": "claude-haiku-4-5-20251001",
+    "request_id": "req_011Cevf3quAsE1pJwdcwz7Fx",
+    "timestamp": "2026-09-10T23:51:25.951+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": false,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 1.239418792014476,
+    "input_tokens": 621,
+    "output_tokens": 45,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3VvdVcVDYz6eHBeH5",
+    "timestamp": "2026-09-10T23:51:27.274+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 7.21151816600468,
+    "input_tokens": 1779,
+    "output_tokens": 387,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3gRfCkAtVFRQCYRen",
+    "timestamp": "2026-09-10T23:51:28.293+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 5.766053082974395,
+    "input_tokens": 462,
+    "output_tokens": 223,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3wCQsFhY4M4t6SksR",
+    "timestamp": "2026-09-10T23:51:28.446+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.495030999998562,
+    "input_tokens": 1765,
+    "output_tokens": 95,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "user_simulator",
+    "model": "claude-haiku-4-5-20251001",
+    "request_id": "req_011Cevf47CvBppPbpQj42wXe",
+    "timestamp": "2026-09-10T23:51:29.550+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": false,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 1.2568187080032658,
+    "input_tokens": 618,
+    "output_tokens": 48,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf4CXQQvwFL1WSZ2etb",
+    "timestamp": "2026-09-10T23:51:31.673+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 2.1220346659829374,
+    "input_tokens": 733,
+    "output_tokens": 99,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   },
+   {
+    "role": "agent",
+    "model": "claude-sonnet-4-6",
+    "request_id": "req_011Cevf3oyanFcH8BuLEjCr1",
+    "timestamp": "2026-09-10T23:51:32.747+00:00",
+    "api_mode": "realtime",
+    "streamed": false,
+    "cache_enabled": true,
+    "ttft_s": null,
+    "ttft_texto_s": null,
+    "latency_s": 8.489356334001059,
+    "input_tokens": 1334,
+    "output_tokens": 547,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 6466
+   }
+  ],
+  "ttft_por_rol": {},
+  "latency_s": 15.381089083995903,
+  "n_turnos": 2,
+  "streaming": false,
+  "cache_habilitada": true,
+  "plan": null,
+  "cuarentena": {
+   "n_llamadas": 0,
+   "n_descartes": 0,
+   "motivos_descarte": []
+  },
+  "final_state": {
+   "texto_final": "Encontré varias opciones con stock disponible hoy. Acá te resumo las más relevantes:\n\n| Producto | Precio | RAM | SSD | Pantalla | Peso | Stock |\n|---|---|---|---|---|---|---|\n| **Nahuel Portátil 13.3 Balanceado** | $348.990 | 16 GB | 512 GB | 13.3\" | 1,1 kg | ✅ 34 |\n| **Cordillera Compact 14 Estándar** | $553.990 | 8 GB | 256 GB | 14\" | 1,6 kg | ✅ 7 |\n| **Nahuel Balance 14 Versátil** | $484.990 | 8 GB | 256 GB | 14\" | 1,6 kg | ✅ 10 |\n| **Cordillera Ultralight 15 Portátil** | $474.990 | 8 GB | 256 GB | 15.6\" | 1,1 kg | ✅ 32 |\n| **Cordillera Lite 16 Eficiente** | $772.990 | 8 GB | 512 GB | 16\" | 1,1 kg | ✅ 9 |\n\n> ⚠️ El **Elqui Compact 13** apareció en la búsqueda pero está **sin stock**, así que lo dejo fuera.\n\nPara tareas de oficina, mis recomendaciones son:\n\n- 🥇 **Nahuel Portátil 13.3 Balanceado** — el más equilibrado: 16 GB de RAM y 512 GB de SSD al precio más bajo. Ideal si también te interesa la portabilidad.\n- 🥈 **Cordillera Lite 16 Eficiente** — pantalla grande de 16\" y 512 GB, muy liviano (1,1 kg), si prefieres más espacio de trabajo visual.\n\n¿Te interesa profundizar en alguno de estos, ver reseñas o comparar dos opciones?\n\n<<rec:P0005>> <<rec:P0027>>",
+   "recomendaciones": [
+    "P0005",
+    "P0027"
+   ],
+   "productos_recomendados": [
+    {
+     "id": "P0005",
+     "name": "Nahuel Portátil 13.3 Balanceado",
+     "category": "notebooks",
+     "brand": "Nahuel",
+     "price_clp": 348990,
+     "attributes": {
+      "pantalla_pulgadas": 13.3,
+      "peso_kg": 1.1,
+      "procesador": "Serie 3",
+      "ram_gb": 16,
+      "ssd_gb": 512
+     },
+     "stock": 34,
+     "avg_rating": 3.8,
+     "description": "Notebook Nahuel de 13.3 pulgadas ultraportátil con 16 GB de RAM y 512 GB SSD. Peso de solo 1.1 kg perfecto para profesionales móviles. Procesador Serie 3 con desempeño confiable."
+    },
+    {
+     "id": "P0027",
+     "name": "Cordillera Lite 16 Eficiente",
+     "category": "notebooks",
+     "brand": "Cordillera",
+     "price_clp": 772990,
+     "attributes": {
+      "pantalla_pulgadas": 16.0,
+      "peso_kg": 1.1,
+      "procesador": "Serie 5",
+      "ram_gb": 8,
+      "ssd_gb": 512
+     },
+     "stock": 9,
+     "avg_rating": 3.6,
+     "description": "Notebook Cordillera de 16 pulgadas con diseño ligero de 1.1 kg y procesador Serie 5. Almacenamiento SSD de 512 GB para balance entre capacidad y portabilidad. Pantalla grande para mejor visualización."
+    }
+   ],
+   "recomendaciones_desconocidas": [],
+   "productos_vistos": [
+    "P0002",
+    "P0005",
+    "P0013",
+    "P0015",
+    "P0017",
+    "P0027"
+   ],
+   "comparaciones": [],
+   "comparaciones_marcadas": [],
+   "origen_estado": "texto",
+   "marcadores_declarados": {},
+   "herramientas_invocadas": [
+    "search_catalog"
+   ],
+   "herramientas_restringidas_invocadas": [],
+   "llamadas": [
+    {
+     "nombre": "search_catalog",
+     "argumentos": {
+      "query": "notebook trabajo oficina",
+      "category": "notebooks",
+      "max_price": 800000
+     },
+     "origen_argumentos": {
+      "query": "usuario",
+      "category": "usuario",
+      "max_price": "usuario"
+     },
+     "turno": 2,
+     "bloqueada": false,
+     "motivo_bloqueo": null,
+     "error": null,
+     "resultado": [
+      {
+       "id": "P0002",
+       "name": "Cordillera Compact 14 Estándar",
+       "category": "notebooks",
+       "brand": "Cordillera",
+       "price_clp": 553990,
+       "attributes": {
+        "pantalla_pulgadas": 14.0,
+        "peso_kg": 1.6,
+        "procesador": "Serie 7",
+        "ram_gb": 8,
+        "ssd_gb": 256
+       },
+       "stock": 7,
+       "avg_rating": 3.9,
+       "description": "Notebook Cordillera de 14 pulgadas con 8 GB de RAM y procesador Serie 7. Equipo versátil y accesible para uso general. Peso de 1.6 kg ideal para trasladar entre espacios de trabajo."
+      },
+      {
+       "id": "P0005",
+       "name": "Nahuel Portátil 13.3 Balanceado",
+       "category": "notebooks",
+       "brand": "Nahuel",
+       "price_clp": 348990,
+       "attributes": {
+        "pantalla_pulgadas": 13.3,
+        "peso_kg": 1.1,
+        "procesador": "Serie 3",
+        "ram_gb": 16,
+        "ssd_gb": 512
+       },
+       "stock": 34,
+       "avg_rating": 3.8,
+       "description": "Notebook Nahuel de 13.3 pulgadas ultraportátil con 16 GB de RAM y 512 GB SSD. Peso de solo 1.1 kg perfecto para profesionales móviles. Procesador Serie 3 con desempeño confiable."
+      },
+      {
+       "id": "P0013",
+       "name": "Elqui Compact 13 Eficiente",
+       "category": "notebooks",
+       "brand": "Elqui",
+       "price_clp": 369990,
+       "attributes": {
+        "pantalla_pulgadas": 13.3,
+        "peso_kg": 2.1,
+        "procesador": "Serie 3",
+        "ram_gb": 16,
+        "ssd_gb": 256
+       },
+       "stock": 0,
+       "avg_rating": 4.1,
+       "description": "Notebook Elqui con pantalla de 13.3 pulgadas y procesador Serie 3. Incluye 16 GB de memoria RAM para multitarea fluida y 256 GB de almacenamiento SSD. Solución equilibrada para uso cotidiano."
+      },
+      {
+       "id": "P0015",
+       "name": "Nahuel Balance 14 Versátil",
+       "category": "notebooks",
+       "brand": "Nahuel",
+       "price_clp": 484990,
+       "attributes": {
+        "pantalla_pulgadas": 14.0,
+        "peso_kg": 1.6,
+        "procesador": "Serie 5",
+        "ram_gb": 8,
+        "ssd_gb": 256
+       },
+       "stock": 10,
+       "avg_rating": 3.4,
+       "description": "Notebook Nahuel de 14 pulgadas con procesador Serie 5 y 8 GB de RAM. Pantalla de tamaño intermedio con peso de 1.6 kg facilita el transporte. Equipado con 256 GB de almacenamiento SSD para uso general."
+      },
+      {
+       "id": "P0017",
+       "name": "Cordillera Ultralight 15 Portátil",
+       "category": "notebooks",
+       "brand": "Cordillera",
+       "price_clp": 474990,
+       "attributes": {
+        "pantalla_pulgadas": 15.6,
+        "peso_kg": 1.1,
+        "procesador": "Serie 7",
+        "ram_gb": 8,
+        "ssd_gb": 256
+       },
+       "stock": 32,
+       "avg_rating": 3.7,
+       "description": "Notebook Cordillera de 15.6 pulgadas que pesa solo 1.1 kg, ideal para viajeros. Procesador Serie 7 y 8 GB de RAM ofrecen buen desempeño. Incluye 256 GB de almacenamiento SSD para aplicaciones y documentos."
+      },
+      {
+       "id": "P0027",
+       "name": "Cordillera Lite 16 Eficiente",
+       "category": "notebooks",
+       "brand": "Cordillera",
+       "price_clp": 772990,
+       "attributes": {
+        "pantalla_pulgadas": 16.0,
+        "peso_kg": 1.1,
+        "procesador": "Serie 5",
+        "ram_gb": 8,
+        "ssd_gb": 512
+       },
+       "stock": 9,
+       "avg_rating": 3.6,
+       "description": "Notebook Cordillera de 16 pulgadas con diseño ligero de 1.1 kg y procesador Serie 5. Almacenamiento SSD de 512 GB para balance entre capacidad y portabilidad. Pantalla grande para mejor visualización."
+      }
+     ]
+    }
+   ],
+   "pasos_bloqueados": [],
+   "n_turnos": 2
+  },
+  "incidencias": [],
+  "input_tokens": 2163,
+  "output_tokens": 761,
+  "cache_creation_tokens": 0,
+  "cache_read_tokens": 19398
+ }
+}

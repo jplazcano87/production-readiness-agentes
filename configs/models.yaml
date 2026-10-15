@@ -1,0 +1,84 @@
+# Modelos y parámetros de inferencia.
+# Decisión cerrada (CLAUDE.md): sonnet = agente base, planificador CTE y juez LLM;
+# haiku = LLM en cuarentena, simulador de usuario y redacción de texto sintético.
+#
+# NOTA SOBRE IDS: `claude-sonnet-4-6` es el id exacto publicado. Para Haiku 4.5 la
+# documentación vigente lista el id sin sufijo de fecha (`claude-haiku-4-5`); aquí se
+# mantiene el id fechado `claude-haiku-4-5-20251001` porque es una decisión cerrada del
+# informe. Si la API rechazara el id fechado, cambiar únicamente el campo `id` de
+# `quarantine`, `user_simulator` y `synthetic_writer` por `claude-haiku-4-5` y anotarlo
+# en CLAUDE.md; nada más en el repositorio depende de la cadena.
+#
+# TRANSPORTE DE `temperature`: el SDK `anthropic` 1.4.0 eliminó `temperature`, `top_p` y
+# `top_k` de las firmas tipadas de `messages.create` y `messages.stream`. La API sí los
+# acepta en Sonnet 4.6 y Haiku 4.5 (verificado contra la API real el 2026-09-07), así que
+# el wrapper los envía por `extra_body` en tiempo real y en línea en la Batch API. Los
+# valores de abajo son los del diseño y no cambian; ver `prf.infra.client`.
+#
+# `thinking: null` en todos los roles: el pensamiento extendido está desactivado a
+# propósito. La evaluación mide el no determinismo del agente en su configuración de
+# producción y usa `temperature`, que en Sonnet 4.6 / Haiku 4.5 puede fijarse libremente
+# mientras el pensamiento extendido no esté activo.
+
+defaults:
+  max_retries: 5           # reintentos con backoff exponencial del wrapper
+  backoff_base_s: 1.0
+  backoff_max_s: 60.0
+  timeout_s: 600.0
+
+roles:
+
+  agent:                      # agente de pre-venta (E1, E2, E3)
+    id: claude-sonnet-4-6
+    max_tokens: 2048
+    temperature: 1.0          # no determinismo intencional: pass^k mide su efecto
+    thinking: null
+
+  cte_planner:                # planificador Code-Then-Execute (config `cte`)
+    id: claude-sonnet-4-6
+    max_tokens: 2048
+    temperature: 0.0
+    thinking: null
+
+  judge:                      # juez LLM (solo E6, nunca decide)
+    id: claude-sonnet-4-6
+    max_tokens: 512
+    temperature: 0.0
+    thinking: null
+
+  quarantine:                 # LLM en cuarentena (dual_llm y cte)
+    id: claude-haiku-4-5-20251001
+    max_tokens: 512
+    temperature: 0.0
+    thinking: null
+
+  user_simulator:             # simulador de usuario en el bucle agente-usuario
+    id: claude-haiku-4-5-20251001
+    max_tokens: 512
+    temperature: 0.7
+    thinking: null
+
+  synthetic_writer:           # redacción del corpus (intenciones, reseñas, descripciones)
+    id: claude-haiku-4-5-20251001
+    max_tokens: 1024
+    temperature: 0.7
+    thinking: null
+
+# Precios en USD por millón de tokens (tarifa Anthropic de primera parte).
+# Se usan solo para la estimación de costo de `--dry-run` y la contabilidad local.
+pricing:
+  claude-sonnet-4-6:
+    input_per_mtok: 3.00
+    output_per_mtok: 15.00
+  claude-haiku-4-5-20251001:
+    input_per_mtok: 1.00
+    output_per_mtok: 5.00
+  claude-haiku-4-5:
+    input_per_mtok: 1.00
+    output_per_mtok: 5.00
+
+# Multiplicadores sobre el precio de entrada.
+pricing_multipliers:
+  cache_write: 1.25    # escritura de caché (cache_creation_input_tokens)
+  cache_read: 0.10     # lectura de caché (cache_read_input_tokens)
+  batch: 0.50          # Batch API: -50 % sobre entrada y salida

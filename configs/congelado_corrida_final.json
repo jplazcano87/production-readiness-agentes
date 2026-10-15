@@ -1,0 +1,44 @@
+{
+  "tag": "corrida-final-3.0.0",
+  "proposito": "Lo que debe permanecer idéntico mientras el tag apunte al HEAD. Si algo de aquí cambia, las corridas finales dejan de ser del mismo sistema y hay que mover el tag a conciencia, no de rebote.",
+  "agent_version": "3.0.1",
+  "agent_versions_en_resultados": {
+    "e1_baseline": "3.0.0",
+    "e2_security": "3.0.0",
+    "e2_security_haiku": "3.0.1",
+    "e3_latency": "3.0.1",
+    "e3_latency_warm": "3.0.1",
+    "e4_compliance": "3.0.1",
+    "e6_judge": "3.0.1"
+  },
+  "evaluator_version": "2.1.1",
+  "corpus_version": "v1.4",
+  "corpus_hash": "287b3bf1ecaff1639c379d3ea6778280e29c2abe5d312d4038c9a9827bc39529",
+  "corpus_version_en_resultados": "v1.2",
+  "corpus_hash_en_resultados": "55921b515c3ceb9b4d01ead45b81ae9e3b29f0229c64bf8d0304830f9ccf7f18",
+  "corpus_hereda_byte_a_byte": [
+    "catalog.json",
+    "reviews.jsonl",
+    "cases_robustness.jsonl"
+  ],
+  "nota_corpus": "El árbol está en v1.4 y las corridas finales se midieron en v1.2. No las invalida porque las versiones son incrementales y solo añaden: v1.3 sumó 30 casos de inyección indirecta con portador descripción al final de cases_security.jsonl, y v1.4 sumó un caso de cumplimiento al final de cases_compliance.jsonl. Los archivos de `corpus_hereda_byte_a_byte` son idénticos y los de `corpus_hereda_por_prefijo` lo son en sus primeras N líneas, que son las que las corridas de v1.2 midieron. tests/test_congelado_corrida_final.py lo comprueba comparando bytes en vez de creerse esta nota.",
+  "huellas_prompt": {
+    "cte": "44e6def10f29955f",
+    "dual_llm": "44e6def10f29955f",
+    "none": "1d870f943bfbab7a",
+    "prompt_only": "0817b508889e4fb9",
+    "cte_planificador": "f68f5364742ecdc2"
+  },
+  "nota_huellas": "`cte` y `dual_llm` comparten huella conversacional porque comparten banderas; da igual, el modelo de `cte` no ve ese prompt sino el del planificador, que va aparte en `cte_planificador`.",
+  "despliegue_version": "1.0.0",
+  "reglas_sin_caso_aceptadas": [
+    "must_include"
+  ],
+  "nota_reglas": "`must_include` no la ejerce ningún caso de los 200 del corpus, así que ninguna medición la ha ejecutado nunca (L9). No bloquea las corridas —nada en ellas depende de ella— pero queda declarada aquí para que el pre-vuelo falle si aparece otra regla muerta, en vez de que la lista de reglas sin caso crezca en silencio.",
+  "nota_version": "E1, E4 y E2 con Sonnet se midieron con el agente 3.0.0. El parche 3.0.1 solo evita perder una ejecución cuando la plantilla del planificador trae una especificación de formato inválida; con Sonnet no se activó nunca (0 incidencias en ambas corridas), así que no las invalida. La corrida con Haiku sí lo necesita y va con 3.0.1.",
+  "corpus_hereda_por_prefijo": {
+    "cases_security.jsonl": 140,
+    "cases_compliance.jsonl": 25
+  },
+  "checklist_version": "1.2.0"
+}

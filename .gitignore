@@ -1,0 +1,89 @@
+# Claves y entorno
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Seguimiento opcional
+mlruns/
+
+# Artefactos locales de ejecución (los resultados canónicos SÍ se versionan)
+runs/
+# Las ~1.000 ejecuciones de E1 con su transcripción completa: ~15 MB de artefactos
+# generados. La etapa 8 copiará a data/annotation/ las 80 que muestrea para anotar, que
+# son las que el informe cita.
+# Transcripciones archivadas de corridas anteriores de E1: la evidencia por caso vive
+# localmente; el JSON canónico de cada corrida sí está versionado.
+results/runs_e1_*/
+# Transcripciones por ejecución de E2 y E3: 28 MB y 8,5 MB. El JSON canónico de cada
+# experimento lleva las observaciones caso por caso, que es lo que el informe cita; estas
+# quedan localmente para poder revisar una ejecución concreta.
+*.log
+
+# macOS
+.DS_Store
+
+# Corpus de trabajo de la calibración de ataques (dev): no es un corpus congelado.
+data/corpus/v1.2-dev/
+data/splits/v1.2-dev/
+# Resultados de las rondas de calibración de los ataques de v1.2. Se publican las tres
+# rondas, porque son la evidencia de que la fuerza de los ataques se ajustó solo sobre la
+# partición de desarrollo; lo que no se publica es el corpus de trabajo con que corrieron.
+results/e2_cal_r*.json
+!results/e2_cal_r1.json
+!results/e2_cal_r2.json
+!results/e2_cal_r3.json
+
+# Entregables generados para terceros (interfaz de anotación de E6). Llevan las
+# transcripciones embebidas y la tabla que rompe el ciegamiento: se generan, no se versionan.
+exports/
+
+# --- transcripciones por ejecución: se publican las que sostienen una cifra ---
+# E1: las 1.344 de la corrida final (1.008 de `none`/`dual_llm`/`cte` más 336 de
+# `prompt_only`) y las 4 de la práctica de E6. Las demás son ejecuciones de la
+# partición de desarrollo que ningún resultado cita.
+results/runs_e1/ROB-BUS-002__*
+results/runs_e1/ROB-BUS-005__*
+results/runs_e1/ROB-BUS-010__*
+results/runs_e1/ROB-BUS-013__*
+results/runs_e1/ROB-BUS-015__*
+results/runs_e1/ROB-BUS-017__*
+results/runs_e1/ROB-CMP-001__*
+results/runs_e1/ROB-CMP-009__*
+results/runs_e1/ROB-CMP-011__*
+results/runs_e1/ROB-CMP-013__*
+results/runs_e1/ROB-CMP-016__*
+results/runs_e1/ROB-CMP-018__*
+results/runs_e1/ROB-REC-006__*
+results/runs_e1/ROB-REC-010__*
+results/runs_e1/ROB-REC-012__*
+results/runs_e1/ROB-REC-013__*
+results/runs_e1/ROB-REC-014__*
+results/runs_e1/ROB-REC-019__*
+!results/runs_e1/ROB-BUS-002__cte__0.json
+!results/runs_e1/ROB-BUS-010__none__0.json
+!results/runs_e1/ROB-CMP-013__cte__0.json
+!results/runs_e1/ROB-REC-006__cte__0.json
+
+# E2, raíz de `runs_e2/`: ahí escribía el arnés antes de usar un directorio por corrida.
+# Lo que queda son tres cosas y se publican las tres: las 60 de la compuerta del modelo
+# pequeño, las 25 del piloto de la corrida con Haiku y `SEG-BEN-040__cte__2`, de la corrida
+# final con Sonnet. Qué es cada una, y por qué el piloto no es la medición, está en
+# docs/PROCEDENCIA.md.
+
+# Originales retenidos: llevan un móvil con formato válido que el agente inventó.
+# Se publican sus copias `.redactado.json`; el SHA-256 de cada original queda en
+# docs/MANIFIESTO_ARTEFACTOS.json.
+results/runs_e4/CUM-025__cte.json
+results/runs_e4_v2.0.0/CUM-025__cte.json
+results/e4_compliance_cte_v2.0.0.json
