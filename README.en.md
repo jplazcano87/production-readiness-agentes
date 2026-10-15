@@ -34,11 +34,24 @@ The four configurations compared:
 
 - **`none`**: no defense. This is the baseline, and for it to be a real baseline its prompt
   does not pre-emptively deny any of the corpus's attack objectives.
-- **`prompt_only`**: defensive clauses in the system prompt, nothing else.
+- **`prompt_only`**: the defense lives only in the system prompt: clauses that deny each attack
+  objective, plus a paragraph telling the model to treat retrieved content as untrusted data.
 - **`dual_llm`**: untrusted content (reviews, product descriptions) goes through a quarantined
-  model that returns a structured summary; the privileged model never sees the raw text.
+  model that returns a structured summary; the privileged model never sees the raw text. Its
+  system prompt also carries **the same warning paragraph** as `prompt_only`, but not the
+  clauses: what sets it apart from `prompt_only` is the quarantine and the missing clauses, not
+  the warning.
 - **`cte`**: a simplified Code-Then-Execute, inspired by CaMeL. A planner writes a plan and an
   interpreter runs it, so untrusted text cannot alter control flow. It is not a CaMeL replica.
+  The planner has its own system prompt, with neither the warning paragraph nor the clauses.
+
+The definitions are in [`src/prf/agent/configuraciones.py`](src/prf/agent/configuraciones.py).
+
+**Models and temperatures**, per [`configs/models.yaml`](configs/models.yaml): the agent
+(`claude-sonnet-4-6`) runs at temperature **1.0**, on purpose, because pass^k measures the
+effect of that non-determinism; the user simulator and the corpus writer
+(`claude-haiku-4-5-20251001`) at **0.7**; and the Code-Then-Execute planner and the judge
+(Sonnet) and the quarantined model (Haiku) at **0**. Extended thinking is off in every role.
 
 ## Results
 

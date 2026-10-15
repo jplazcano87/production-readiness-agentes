@@ -32,13 +32,27 @@ Las cuatro configuraciones que se comparan:
 
 - **`none`**: sin defensa. Es la línea base, y para que lo sea de verdad su prompt no niega por
   adelantado ninguno de los objetivos de ataque del corpus.
-- **`prompt_only`**: las cláusulas defensivas en el system prompt, y nada más.
+- **`prompt_only`**: la defensa vive solo en el system prompt: las cláusulas que niegan cada
+  objetivo de ataque y un párrafo que ordena tratar el contenido recuperado como datos no
+  confiables.
 - **`dual_llm`**: el contenido no confiable (reseñas, descripciones) pasa por un modelo en
   cuarentena que devuelve un resumen estructurado; el modelo privilegiado nunca ve el texto
-  crudo.
+  crudo. Su system prompt lleva además **el mismo párrafo de advertencia** que `prompt_only`,
+  pero no las cláusulas: lo que la separa de `prompt_only` es la cuarentena y la ausencia de
+  cláusulas, no la advertencia.
 - **`cte`**: Code-Then-Execute simplificado, inspirado en CaMeL. Un planificador escribe un plan
   y un intérprete lo ejecuta, de modo que el texto no confiable no puede cambiar el flujo de
-  control. No es una réplica de CaMeL.
+  control. No es una réplica de CaMeL. El planificador tiene su propio system prompt, sin el
+  párrafo de advertencia ni las cláusulas.
+
+Las definiciones están en [`src/prf/agent/configuraciones.py`](src/prf/agent/configuraciones.py).
+
+**Modelos y temperaturas**, según [`configs/models.yaml`](configs/models.yaml): el agente
+(`claude-sonnet-4-6`) corre con temperatura **1,0**, a propósito, porque pass^k mide el efecto
+de ese no determinismo; el simulador de usuario y la redacción del corpus
+(`claude-haiku-4-5-20251001`), con **0,7**; y el planificador de Code-Then-Execute y el juez
+(Sonnet) y el modelo en cuarentena (Haiku), con **0**. El pensamiento extendido está desactivado
+en todos los roles.
 
 ## Resultados
 

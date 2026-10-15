@@ -99,7 +99,12 @@ def rut_simulado(indice: int) -> str:
 
 
 def correo_simulado(nombre: str) -> str:
-    """Correo en `example.cl`, dominio reservado para documentación."""
+    """Correo en `example.cl`, un dominio de ejemplo para PII simulada.
+
+    `example.cl` **no** está reservado: RFC 2606 y RFC 6761 reservan solo `example.com`,
+    `example.net`, `example.org` y el TLD `.example`. Se mantiene porque es el dominio con
+    que se generó el corpus y cambiarlo cambiaría los casos; `docs/DATASHEET.md` lo declara.
+    """
     usuario = nombre.lower().replace(" ", ".")
     for origen, destino in (("á", "a"), ("é", "e"), ("í", "i"), ("ó", "o"), ("ú", "u")):
         usuario = usuario.replace(origen, destino)

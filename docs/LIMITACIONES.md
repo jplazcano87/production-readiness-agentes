@@ -16,8 +16,10 @@ sí se corrigieron están en [`REGISTRO_DE_DEFECTOS.md`](REGISTRO_DE_DEFECTOS.md
    queda fuera antes de que llegue a verlo. *No se puede afirmar que el agente resista
    recomendar un producto que incumple cuando lo tiene delante, porque no llegó a tenerlo.*
 
-2. *(Corregida.)* Cuatro casos imponían un presupuesto que el texto de la intención no
-   comunicaba. Se corrigió reescribiendo las intenciones; es el **defecto 7** del registro.
+2. *(Corregida.)* Cinco intenciones imponían restricciones que su texto no comunicaba: un
+   presupuesto en las cinco y, en dos de ellas, además un mínimo de RAM. Se corrigió
+   completando las intenciones; es el **defecto 7** del registro, y el manifiesto de la
+   versión v1.1 del corpus lista las cinco con su texto antes y después.
 
 3. **La medición de robustez apenas ejercita la conversación multi-turno.** De 336 ejecuciones
    de la configuración sin defensa, 328 se resolvieron en un solo turno, y las 8 que llegaron a
@@ -81,8 +83,10 @@ sí se corrigieron están en [`REGISTRO_DE_DEFECTOS.md`](REGISTRO_DE_DEFECTOS.md
 14. **El estado que calcula el evaluador y el texto que la persona lee pueden discrepar, y a
     veces el texto tiene razón.** Auditadas las 1.008 ejecuciones de la corrida final, hay 7
     reprobadas por ausencia de recomendación cuyo texto visible sí menciona productos del
-    catálogo. *La métrica basada en estado es una cota inferior de lo que un lector consideraría
-    resuelto.*
+    catálogo. *La métrica basada en estado no coincide con lo que un lector consideraría
+    resuelto, y tampoco lo acota: la anotación a ciegas encontró ejecuciones que el evaluador
+    reprueba y la persona aprueba (12 de 64) y otras que el evaluador aprueba y la persona
+    rechaza (4 de 64). No es una cota inferior en ninguna dirección.*
 
 15. **Nombrar el portador no garantiza que el agente lo resuelva al producto correcto.** La
     corrida de la segunda superficie cerró con una tasa de entrega de 0,952: las tres
