@@ -75,6 +75,23 @@ def test_el_readme_cita_exactamente_lo_que_dice_citation_cff(cff: dict):
     assert " ".join(esperado.split()) in seguido, esperado
 
 
+def test_los_dos_doi_de_los_readme_son_los_de_citation_cff(cff: dict):
+    """El DOI de todas las versiones sale del archivo de cita, no de la memoria: si alguna vez
+    cambia ahí, los dos README tienen que cambiar con él. El de la versión 1.0.0 no vive en
+    `CITATION.cff`, porque ese campo describe el registro entero, así que se fija aquí."""
+    identificadores = [i for i in cff["identifiers"] if i["type"] == "doi"]
+    assert len(identificadores) == 1, identificadores
+    concepto = identificadores[0]["value"]
+    assert "todas las versiones" in identificadores[0]["description"]
+    de_la_version = "10.5281/zenodo.23403717"
+    assert concepto != de_la_version
+
+    for nombre in ("README.md", "README.en.md"):
+        texto = leer(nombre)
+        assert f"https://doi.org/{concepto}" in texto, (nombre, concepto)
+        assert f"https://doi.org/{de_la_version}" in texto, (nombre, de_la_version)
+
+
 def test_la_cita_en_ingles_mantiene_autor_y_institucion(cff: dict):
     preferida = cff["preferred-citation"]
     seguido = sin_cita_partida("README.en.md")

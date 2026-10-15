@@ -12,6 +12,15 @@ Las versiones de los componentes no siguen a la del paquete: el agente, el evalu
 criterio de ataque, el checklist y la política de aceptación llevan la suya, declarada en la
 metadata de cada resultado, y describen con qué se midió.
 
+## [Unreleased]
+
+### Añadido
+
+- El DOI de Zenodo en `CITATION.cff` y en los dos README: el de todas las versiones,
+  `10.5281/zenodo.23403716`, y el de la versión 1.0.0, `10.5281/zenodo.23403717`. El registro de Zenodo se creó desde la
+  release `v1.0.0`, que es el commit que publica esta versión; la entrada de abajo no cambia,
+  porque el software publicado es el mismo.
+
 ## [1.0.0] - 2026-10-15
 
 Primera versión pública. El contenido medido no cambia: ningún resultado, ninguna
