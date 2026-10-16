@@ -276,7 +276,8 @@ def test_la_via_preferente_es_batch_con_alternativa_concurrente():
 
 
 def test_el_umbral_de_robustez_no_se_recalibro_a_la_baja():
-    # El calibrador podía derivar pass_k_1.min del IC de la línea base (habría dado 0,783).
+    # El calibrador podía derivar pass_k_1.min del IC de la línea base menos el margen (habría
+    # dado 0,914, la cifra del changelog).
     # Se descartó: anclar el umbral a lo que el agente evaluado consigue convierte la
     # política en una descripción de ese agente, y un agente peor bajaría el listón.
     robustez = load_thresholds()["robustez"]

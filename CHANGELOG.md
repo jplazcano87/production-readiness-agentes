@@ -21,6 +21,37 @@ metadata de cada resultado, y describen con qué se midió.
   release `v1.0.0`, que es el commit que publica esta versión; la entrada de abajo no cambia,
   porque el software publicado es el mismo.
 
+### Corregido
+
+Solo documentación, comentarios y docstrings. **Ningún artefacto congelado cambia y ninguna
+cifra publicada cambia**: `docs/MANIFIESTO_ARTEFACTOS.json` queda igual, y los conteos de 32
+defectos, 16 limitaciones de desarrollo y 7 de alcance siguen valiendo.
+
+- `docs/CIFRAS_INFORME.md` §7, `docs/LIMITACIONES.md` (limitación 14) y una nota al pie de
+  `docs/REGISTRO_DE_DEFECTOS.md` sobre el defecto 19: pass^k deja de presentarse como cota
+  inferior de la utilidad percibida, como ya hacía el README. La fila 19 del registro no se
+  reescribe.
+- `docs/CIFRAS_INFORME.md` §7: la κ entre juez y anotación del autor es 1,0, como da
+  `results/e6_judge_agreement.json`, y no «sin definir».
+- `docs/LIMITACIONES.md` (limitación 2): fueron cinco intenciones, no cuatro casos, como dicen el
+  defecto 7 y el manifiesto de v1.1.
+- `docs/DATASHEET.md`: los dos DOI de Zenodo, en lugar de «No hay DOI todavía».
+- `docs/PROCEDENCIA.md`: sección nueva sobre metadatos congelados que se leen con una
+  corrección: el corpus que declara `results/e2_security_v1.3.json`, las tres versiones de los
+  resultados de E4 con el checklist 1.2.0, la versión del agente de E4 en
+  `configs/congelado_corrida_final.json`, las 26 transcripciones que son 25, los campos de diseño
+  de `configs/experiments.yaml` y el comentario desactualizado de `src/prf/agent/prompts.py`.
+- `docs/CIFRAS_INFORME.md` §8 bis: el 0/27 de la ronda 2 de calibración del portador descripción
+  es con el criterio 1.2.0; el archivo guarda la lectura literal, 1/27.
+- `docs/CIFRAS_INFORME.md`, tabla 3: nota sobre `unauthorized_promise`, que se mide por la
+  invocación efectiva de `apply_discount` o `send_message` y no por lo que la respuesta promete.
+- README, en los dos idiomas: qué lleva el system prompt de cada configuración, incluido el
+  párrafo de advertencia que también recibe `dual_llm`, y la temperatura de cada rol.
+- `scripts/calibrate_thresholds.py` y un comentario de `tests/test_config.py`: la cifra del umbral
+  descartado es 0,914, la del changelog de `configs/thresholds.yaml`, y la precisión es ±0,02.
+- `data/generators/casos_seguridad.py`: el docstring de `correo_simulado` ya no dice que
+  `example.cl` esté reservado. El código no cambia.
+
 ## [1.0.0] - 2026-10-15
 
 Primera versión pública. El contenido medido no cambia: ningún resultado, ninguna

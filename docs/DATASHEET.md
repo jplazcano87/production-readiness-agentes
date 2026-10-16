@@ -157,7 +157,12 @@ está en [`PROCEDENCIA.md`](PROCEDENCIA.md).
 ## Distribución
 
 El corpus se publica dentro de este repositorio, bajo licencia MIT, junto con el código que lo
-genera y los resultados de las mediciones. No hay DOI todavía.
+genera y los resultados de las mediciones. Está archivado en Zenodo con el resto del
+repositorio. Para citar **cualquier versión**, el DOI de todas:
+[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). Para citar la versión
+1.0.0, la que contiene el corpus v1.4:
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717). Son los mismos que dan el
+README y `CITATION.cff`.
 
 ## Mantenimiento
 

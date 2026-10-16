@@ -190,6 +190,94 @@ No es un error del archivo. Es lo que significa congelar algo: queda como estaba
 vigentes están en [`CIFRAS_INFORME.md`](CIFRAS_INFORME.md)**, que es el documento que se mantiene
 al día y que dice, para cada número, de qué archivo sale.
 
+## Metadatos congelados que se leen con una corrección
+
+Algunos campos de archivos congelados dicen algo que, leído solo, lleva a una conclusión
+equivocada. **No se corrigen**, por la misma razón que todo lo anterior: cambiarlos rompería el
+hash del artefacto medido. Esta sección dice qué campo es, qué vale y por qué. Ninguno cambia una
+cifra publicada.
+
+### `results/e2_security_v1.3.json` declara el corpus v1.4
+
+El nombre del archivo y [`CIFRAS_INFORME.md`](CIFRAS_INFORME.md) hablan de v1.3, y
+`metadata.corpus_version` dice **v1.4**, con el hash de v1.4 (`287b3bf1…`). La causa es
+mecánica: el archivo es una vista combinada, escrita sin API por `scripts/e2_vista_combinada.py`
+el 11 de octubre a las 18:05 UTC, después del tag `corpus-v1.4` (17:53), y ese script toma la
+versión de `configs/experiments.yaml`, que ya decía v1.4.
+
+**Los casos de seguridad son los mismos.** v1.4 se diferencia de v1.3 solo en
+`cases_compliance.jsonl`, al que añade `CUM-026`: `cases_security.jsonl`, `reviews.jsonl`,
+`catalog.json` y `cases_robustness.jsonl` son **idénticos byte a byte** entre las dos versiones,
+y las líneas `SEG-` de `data/splits/v1.3/test.txt` y `data/splits/v1.4/test.txt` también. Qué
+corrida midió qué está en `metadata.vista_combinada.corridas`: los 98 casos de reseña vienen de la
+corrida sobre v1.2 y los 21 de descripción, de la corrida sobre v1.3.
+
+### `results/e4_compliance_checklist1.2.0_<config>.json`: tres versiones en un mismo archivo
+
+Los cuatro archivos, y los `e4_reverificado_checklist1.2.0_<config>.json` de los que salen,
+declaran:
+
+| Campo | Valor | Qué es |
+|---|---|---|
+| `checklist_version` (nivel superior) | **1.2.0** | el checklist que emitió los veredictos de los ítems. **Es el que vale** |
+| `metadata.checklist_version` | 1.0.0 | el checklist vigente cuando se corrió la medición que produjo las transcripciones, el 10 de septiembre |
+| `metadata.repuntuado` | 1.1.0 → 1.2.0 | la última reverificación sin API, con el checklist de antes y el de después |
+| `metadata.corpus_version` | v1.4 | el corpus vigente al reverificar, que trae `CUM-026`, el caso del ítem nuevo |
+| `metadata.corpus_hash` | `55921b51…`, **el de v1.2** | el corpus sobre el que corrieron las transcripciones |
+| `metadata.corpus_version_de_las_transcripciones` | v1.2 | lo mismo, con su nombre |
+
+La explicación está en `scripts/run_e4.py`, en la función que reverifica: mueve el
+`checklist_version` del documento y el `corpus_version` de la metadata, y guarda la versión
+anterior en `corpus_version_de_las_transcripciones`, pero no toca `metadata.checklist_version`
+ni `metadata.corpus_hash`, que se escribieron al correr. Así que el par `corpus_version` v1.4 con
+`corpus_hash` de v1.2 **no se lee junto**: el hash va con
+`corpus_version_de_las_transcripciones`. El ítem nuevo, `INFORMACION_VERAZ_RESULTADOS`, sí se
+midió sobre v1.4, y lo declara `metadata.combinado.item_nuevo.corpus_version`.
+
+### `configs/congelado_corrida_final.json` dice que E4 se midió con el agente 3.0.0
+
+Su `nota_version` dice que «E1, E4 y E2 con Sonnet se midieron con el agente 3.0.0». Para E4 no
+es así: la metadata de los cuatro resultados de E4 declara `agent_version` **3.0.1**, y el mismo
+archivo lo dice en `agent_versions_en_resultados.e4_compliance`. **Vale la metadata**, que la
+escribe la corrida, y no la nota, que se escribió a mano. E1 y E2 con Sonnet sí son 3.0.0. El
+registro de cambios de `AGENT_VERSION` en `src/prf/agent/configuraciones.py` repite la misma
+frase sobre E4. El parche 3.0.1 no cambia el texto de ningún prompt, así que la diferencia no
+afecta a lo medido.
+
+### 26 transcripciones perdidas, que son 25
+
+`results/e2_security.json`, `results/e2_security_criterio1.2.0.json`,
+`results/e2_security_v1.3.json` y los cuatro `results/e5_verdict_v0.3.0_<config>.json`
+declaran 26 transcripciones faltantes. Son **25**: una de las 26 se conservó y se publica. El
+detalle está arriba, en
+[«Las 26 ejecuciones de E2 con Sonnet que no declaran transcripción, y la que sí está»](#las-26-ejecuciones-de-e2-con-sonnet-que-no-declaran-transcripción-y-la-que-sí-está).
+
+### `configs/experiments.yaml` conserva valores del diseño
+
+Tres campos ya no describen lo que se midió:
+
+| Campo | Dice | Lo medido |
+|---|---|---|
+| `experiments.e6_juez.n_muestra` | 80, con `estratificacion` 40 y 40 | **64**: todas las fallidas más 40 exitosas, porque el agente final falla 24 de 1.008 (defecto 18 de [`REGISTRO_DE_DEFECTOS.md`](REGISTRO_DE_DEFECTOS.md)) |
+| `corpus.cumplimiento.n_casos` | 25 | **26** en v1.4, con `CUM-026` |
+| `api.modo_preferente` | `batch` | las corridas finales fueron **en tiempo real**: cada resultado lo declara en `metadata.api_mode` |
+
+Ningún script lee esos tres campos: `scripts/run_e6.py` arma la muestra con su propia regla y
+escribe el tamaño real en el resultado, y los experimentos toman el número de casos del corpus.
+Solo `tests/test_config.py` los compara con los valores escritos. El archivo **no se edita**,
+ni siquiera para añadir un comentario, porque está en `docs/MANIFIESTO_ARTEFACTOS.json` con su
+hash. Lo mismo vale para los `api_mode: batch` de cada experimento.
+
+### El comentario de `prompts.py` sobre la advertencia
+
+En `src/prf/agent/prompts.py`, el comentario del párrafo `ADVERTENCIA_CONTENIDO_NO_CONFIABLE`
+dice que «es lo único que separa `prompt_only` de `none`». Desde el agente 3.0.0 no es cierto:
+`prompt_only` lleva además las cláusulas defensivas, y `dual_llm` recibe también ese párrafo
+(`advierte_en_prompt=True` en `src/prf/agent/configuraciones.py`), aunque no las cláusulas. En
+`cte` la bandera también está activa, pero el planificador tiene su propio system prompt y el
+párrafo no le llega. El archivo es congelado, porque sus textos tienen huella, y el comentario
+se deja como está; la descripción correcta de las cuatro configuraciones está en el README.
+
 ## Artefactos retenidos
 
 Tres archivos **no se publican en su forma original**. Al fabricar canales de contacto que nadie

@@ -62,5 +62,13 @@ corrida» es una afirmación que nadie puede auditar.
 **Cuatro se encontraron por el mismo método**: leer, una por una, las ejecuciones que una
 métrica agregada marcaba como anómalas. Ninguno habría aparecido mirando solo el promedio.
 
+**La conclusión del defecto 19 se revisó después.** La fila se deja como se escribió, porque el
+registro es histórico, pero la frase «la métrica de robustez es una cota inferior de la
+utilidad percibida» ya no se sostiene: la anotación a ciegas de E6 encontró 12 ejecuciones que
+el evaluador reprueba y la persona aprueba y 4 al revés, así que el orden no es limpio en
+ninguna dirección. La lectura vigente está en la sección 7 de
+[`CIFRAS_INFORME.md`](CIFRAS_INFORME.md) y en la limitación 14 de
+[`LIMITACIONES.md`](LIMITACIONES.md).
+
 Las limitaciones que no se corrigieron, porque corregirlas exigía rehacer la medición o
 porque son del método y no del código, están en [`LIMITACIONES.md`](LIMITACIONES.md).
