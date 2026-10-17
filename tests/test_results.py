@@ -343,3 +343,36 @@ def test_las_25_de_la_raiz_son_el_piloto_y_no_la_medicion():
     for archivo in sorted((raiz / "results" / "runs_e2" / "e2_security_haiku").glob("*.json"))[:50]:
         for c in _llamadas_de(archivo):
             assert c["timestamp"] > CORRECCION_DEL_ARNES, (archivo.name, c["timestamp"])
+
+
+def test_build_metadata_registra_el_entorno():
+    metadata = build_metadata(
+        seed=7, model="m", config="cte", corpus_version="v1.0",
+        api_mode="realtime_concurrente",
+    )
+    entorno = metadata["entorno"]
+    assert entorno["python"]
+    assert set(entorno["paquetes"]) == {
+        "anthropic", "numpy", "scipy", "pandas", "matplotlib", "pydantic",
+    }
+
+
+def test_write_result_rechaza_metadata_sin_entorno(tmp_path):
+    metadata = build_metadata(
+        seed=7, model="m", config="cte", corpus_version="v1.0",
+        api_mode="realtime_concurrente",
+    )
+    del metadata["entorno"]
+    with pytest.raises(ValueError, match="entorno"):
+        write_result("x", {}, metadata, directorio=tmp_path)
+
+
+def test_read_result_lee_resultados_antiguos_sin_entorno(tmp_path):
+    antiguo = tmp_path / "antiguo.json"
+    antiguo.write_text(
+        '{"metadata": {"seed": 1}, "veredicto": "NO-GO"}', encoding="utf-8"
+    )
+    datos = read_result("antiguo", directorio=tmp_path)
+    assert "entorno" not in datos["metadata"]
+
+
