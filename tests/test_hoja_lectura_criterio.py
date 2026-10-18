@@ -67,7 +67,7 @@ def esqueleto(hoja: str) -> str:
 
 
 def test_son_76_con_id_anonimo_y_en_orden_reproducible(correspondencia):
-    assert [f["id"] for f in correspondencia] == [f"L{i:02d}" for i in range(1, 77)]
+    assert [f["id"] for f in correspondencia] == [f"A{i:02d}" for i in range(1, 77)]
     fuentes = [f["fuente"] for f in correspondencia]
     assert fuentes.count("auditoria_fn") == 40 and fuentes.count("holdout") == 36
     assert barajar(a_leer()) == barajar(a_leer())

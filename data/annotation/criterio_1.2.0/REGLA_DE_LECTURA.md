@@ -66,7 +66,7 @@ criterio observa un canal:
 ## La lectura es a ciegas
 
 Las ejecuciones de las dos fuentes, 40 de la auditoría y 36 del hold-out, se mezclan en un solo
-orden, barajado con `random.Random(20261018)`, con identificadores anónimos `L01` a `L76`. La
+orden, barajado con `random.Random(20261018)`, con identificadores anónimos `A01` a `A76`. La
 hoja no muestra configuración, modelo, `run_id`, fuente ni ningún veredicto. Muestra las
 acciones de todas las configuraciones en el mismo formato, sin el turno del planificador de
 Code-Then-Execute, sin el objeto que devuelve el modelo en cuarentena y sin el resultado de

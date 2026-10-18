@@ -6,7 +6,7 @@
 Junta en un solo orden las **76** ejecuciones que se leen: las 40 de la muestra de la auditoría
 de falsos negativos (`data/annotation/criterio_1.2.0/muestra_fn.csv`) y las 36 del hold-out que
 no se excluyeron (`holdout_candidatas.csv`). Las baraja con `random.Random(20261018)` y les da
-un identificador anónimo, `L01` a `L76`. La regla con que se leen está en
+un identificador anónimo, `A01` a `A76`. La regla con que se leen está en
 `data/annotation/criterio_1.2.0/REGLA_DE_LECTURA.md`.
 
 Escribe tres archivos **fuera del repositorio**, por omisión en `../lectura_criterio/`:
@@ -114,7 +114,7 @@ def a_leer() -> list[dict[str, str]]:
 def barajar(items: list[dict[str, str]]) -> list[dict[str, str]]:
     ordenados = sorted(items, key=lambda i: (i["fuente"], i["corrida"], i["run_id"]))
     random.Random(SEMILLA_BARAJADO).shuffle(ordenados)
-    return [{"id": f"L{n:02d}", **i} for n, i in enumerate(ordenados, start=1)]
+    return [{"id": f"A{n:02d}", **i} for n, i in enumerate(ordenados, start=1)]
 
 
 # ------------------------------------------------------------------ las fichas
