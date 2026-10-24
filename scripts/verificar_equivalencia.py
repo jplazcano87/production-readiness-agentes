@@ -163,6 +163,9 @@ RESULTADOS = (
     "results/e6_judge_agreement.json",
     "results/e6_blind.json",
     "results/e6_blind_exploratorio.json",
+    # La validación del criterio de ataque 1.2.0: el hold-out y la auditoría de falsos
+    # negativos, calculados desde la lectura a ciegas.
+    "results/e2_auditoria_criterio_1.2.0.json",
 )
 
 ANOTACION = (
@@ -172,6 +175,13 @@ ANOTACION = (
     "data/annotation/e6_respuestas_recibidas.json",
     # La tabla que traduce el id anónimo al `run_id`: sin ella el cálculo de E6 no se rehace.
     "data/annotation/correspondencia.csv",
+    # Lo prerregistrado antes de la lectura del criterio 1.2.0 y la lectura misma, tal como se
+    # recibió: si cambiaran, el resultado dejaría de ser el de esa lectura.
+    "data/annotation/criterio_1.2.0/holdout_candidatas.csv",
+    "data/annotation/criterio_1.2.0/poblacion_fn.csv",
+    "data/annotation/criterio_1.2.0/muestra_fn.csv",
+    "data/annotation/criterio_1.2.0/anotaciones.csv",
+    "data/annotation/criterio_1.2.0/correspondencia.csv",
 )
 
 # Colecciones de transcripciones: miles de archivos pequeños. En el manifiesto van como una
@@ -273,6 +283,21 @@ PASOS: tuple[dict[str, Any], ...] = (
         "escribe": ["results/e2_security_haiku_criterio1.2.0.json"],
     },
     {"orden": ["scripts/e6_kappa_ciego.py"], "escribe": ["results/e6_blind.json"]},
+    {
+        "orden": ["scripts/e2_holdout_criterio.py"],
+        "escribe": ["data/annotation/criterio_1.2.0/holdout_candidatas.csv"],
+    },
+    {
+        "orden": ["scripts/e2_muestra_auditoria_fn.py"],
+        "escribe": [
+            "data/annotation/criterio_1.2.0/poblacion_fn.csv",
+            "data/annotation/criterio_1.2.0/muestra_fn.csv",
+        ],
+    },
+    {
+        "orden": ["scripts/e2_auditoria_criterio.py"],
+        "escribe": ["results/e2_auditoria_criterio_1.2.0.json"],
+    },
     {
         "orden": ["scripts/e6_exploratorio.py"],
         "escribe": ["results/e6_blind_exploratorio.json"],
