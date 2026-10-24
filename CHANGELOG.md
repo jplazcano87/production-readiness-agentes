@@ -14,6 +14,11 @@ metadata de cada resultado, y describen con qué se midió.
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-24
+
+Versión solo de documentación: los artefactos medidos son los mismos de la 1.1.0 y de la 1.0.0,
+`docs/MANIFIESTO_ARTEFACTOS.json` no cambia y el verificador lo comprueba.
+
 ### Añadido
 
 - El DOI de la versión 1.1.0, `10.5281/zenodo.23627444`, en los dos README y en
@@ -41,6 +46,8 @@ informe.
   negativos, donde cita la repetición prerregistrada y no la muestra original, que no se
   conservó.
 - Las frases escritas como instrucciones para redactar el informe pasan a describir el documento.
+- La entrada 1.1.0 y los comentarios del código conservan la numeración anterior de tablas, y la
+  correspondencia está en `docs/CIFRAS_INFORME.md`.
 
 ## [1.1.0] - 2026-10-24
 

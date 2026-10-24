@@ -15,7 +15,7 @@ def test_el_paquete_importa_y_tiene_version():
     política **no** se mueven con ella: describen con qué se midió, y cada resultado las
     declara en su metadata. Confundirlas sería dar por nuevo lo que no se ha vuelto a medir.
     """
-    assert prf.__version__ == "1.1.0"
+    assert prf.__version__ == "1.1.1"
     # Y `pyproject.toml` declara la misma: dos sitios con la versión es un sitio de más donde
     # se puede quedar atrás.
     declarada = [
