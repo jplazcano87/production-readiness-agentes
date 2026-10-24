@@ -161,9 +161,10 @@ genera y los resultados de las mediciones. Está archivado en Zenodo con el rest
 repositorio. Para citar **cualquier versión**, el DOI de todas:
 [10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). Para citar la versión
 1.0.0, la que contiene el corpus v1.4:
-[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717). La versión más reciente es la
-1.1.0, que lleva el mismo corpus v1.4:
-[10.5281/zenodo.23627444](https://doi.org/10.5281/zenodo.23627444). Son los mismos que dan el
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717). La versión 1.1.0, que lleva el
+mismo corpus v1.4:
+[10.5281/zenodo.23627444](https://doi.org/10.5281/zenodo.23627444). La versión más reciente es la
+1.1.1, que también lo lleva; su DOI se agregará al publicarse. Son los mismos que dan el
 README y `CITATION.cff`.
 
 ## Mantenimiento

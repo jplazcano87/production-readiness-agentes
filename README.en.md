@@ -257,8 +257,9 @@ thesis is in Spanish, so its title is given as it is, with a translation in brac
 
 The software is archived on Zenodo and has a DOI. To cite **any version**, use the concept DOI:
 [10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). To cite a specific version, use the DOI of that version: 1.0.0,
-[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717); 1.1.0, the latest,
-[10.5281/zenodo.23627444](https://doi.org/10.5281/zenodo.23627444).
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717); 1.1.0,
+[10.5281/zenodo.23627444](https://doi.org/10.5281/zenodo.23627444). The latest version is 1.1.1;
+its DOI will be added here once it is published.
 
 ## License
 
