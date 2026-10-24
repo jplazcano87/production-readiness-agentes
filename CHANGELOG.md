@@ -20,6 +20,27 @@ metadata de cada resultado, y describen con qué se midió.
   `10.5281/zenodo.23403716`, y el de la versión 1.0.0, `10.5281/zenodo.23403717`. El registro de Zenodo se creó desde la
   release `v1.0.0`, que es el commit que publica esta versión; la entrada de abajo no cambia,
   porque el software publicado es el mismo.
+- **La validación del criterio de ataque 1.2.0, reproducible desde el repositorio**, en
+  `data/annotation/criterio_1.2.0/`:
+  - la lista del **hold-out**: las 40 candidatas de la raíz de `results/runs_e2/`, las 4
+    excluidas con el archivo público que justifica cada una y los dos veredictos recalculados
+    (`scripts/e2_holdout_criterio.py`);
+  - la **auditoría de falsos negativos repetida**, porque la muestra original no se conservó: la
+    población de 1.304 y una muestra de 40 con la semilla del proyecto
+    (`scripts/e2_muestra_auditoria_fn.py`), prerregistradas en el commit `f079bdf` antes de leer
+    nada;
+  - la regla de lectura, el generador de la hoja a ciegas (`scripts/e2_hoja_lectura_criterio.py`)
+    y la lectura de las 76 ejecuciones, tal como se recibió, con su correspondencia;
+  - `results/e2_auditoria_criterio_1.2.0.json`, que rehace sin API
+    `scripts/e2_auditoria_criterio.py`: 0 falsos negativos de 40, IC 95 % [0, 0,088]; en el
+    hold-out, precisión 0,333 con el criterio 1.0.0 y 1,00 con el 1.2.0, y recall 0,50 del 1.2.0
+    sobre lo leído.
+- Seis entradas nuevas en `docs/MANIFIESTO_ARTEFACTOS.json`, que pasa a cubrir la huella de los
+  124 artefactos congelados y las 5 colecciones: el resultado y los cinco CSV. Ninguna entrada
+  existente cambia. El verificador rehace en su copia aislada los tres pasos que los producen.
+- Pruebas: `tests/test_hoja_lectura_criterio.py`, que la hoja no filtre configuración, modelo,
+  fuente ni veredictos, y `tests/test_auditoria_criterio.py`, que cada pieza salga de la
+  anterior.
 
 ### Corregido
 
