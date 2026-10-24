@@ -14,6 +14,12 @@ metadata de cada resultado, y describen con qué se midió.
 
 ## [Unreleased]
 
+### Añadido
+
+- El DOI de la versión 1.1.0, `10.5281/zenodo.23627444`, en los dos README y en
+  `docs/DATASHEET.md`. `CITATION.cff` sigue con el de todas las versiones,
+  `10.5281/zenodo.23403716`, que también vale para las siguientes.
+
 ## [1.1.0] - 2026-10-24
 
 Los artefactos medidos son los mismos de la 1.0.0: ningún resultado, transcripción, archivo del
