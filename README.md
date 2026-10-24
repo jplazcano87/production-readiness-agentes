@@ -259,9 +259,9 @@ La cita vive en [`CITATION.cff`](CITATION.cff), que es de donde la toma GitHub:
 > Universidad Católica de Chile.
 
 El software está archivado en Zenodo y tiene DOI. Para citar **cualquier versión**, el de todas:
-[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). Para citar la versión 1.0.0, el de esa versión:
-[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717). La versión más reciente es la
-1.1.0; su DOI se agregará aquí cuando se publique.
+[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). Para citar una versión concreta, el de esa versión: la 1.0.0,
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717); la 1.1.0, la más reciente,
+[10.5281/zenodo.23627444](https://doi.org/10.5281/zenodo.23627444).
 
 ## Licencia
 
