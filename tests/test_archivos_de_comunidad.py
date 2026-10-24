@@ -48,11 +48,24 @@ def test_la_cita_es_valida_y_coincide_con_el_paquete(cff: dict, version_del_paqu
     autor = cff["authors"][0]
     assert (autor["family-names"], autor["given-names"]) == ("Lazcano Candia", "Juan Pablo")
     assert autor["email"] == CORREO_PUBLICO
-    # La fecha de publicación la puso la fase 4, y es la misma que `PROCEDENCIA.md` declara
-    # como fecha de la exportación: son el mismo acto.
+    # La fecha de `CITATION.cff` es la de la versión vigente; que coincida con su entrada del
+    # CHANGELOG lo comprueba `test_el_changelog_tiene_la_entrada_de_la_version`. Aquí solo el
+    # formato: la exportación es un hecho de la 1.0.0 y se ata a esa entrada más abajo.
     fecha = str(cff["date-released"])
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", fecha), fecha
-    assert f"| Fecha de la exportación | {fecha} |" in leer("docs/PROCEDENCIA.md")
+
+
+def test_la_fecha_de_la_exportacion_es_la_de_la_entrada_1_0_0():
+    """La exportación desde el repositorio privado es el acto que publicó la 1.0.0, así que su
+    fecha en `PROCEDENCIA.md` no se mueve con las versiones siguientes: se ata a la entrada
+    1.0.0 del CHANGELOG."""
+    exportacion = re.search(
+        r"^\| Fecha de la exportación \| (\d{4}-\d{2}-\d{2}) \|$",
+        leer("docs/PROCEDENCIA.md"),
+        flags=re.MULTILINE,
+    )
+    assert exportacion, "PROCEDENCIA.md no declara la fecha de la exportación"
+    assert f"## [1.0.0] - {exportacion.group(1)}" in leer("CHANGELOG.md")
 
 
 def sin_cita_partida(nombre: str) -> str:
@@ -147,8 +160,8 @@ def test_security_declara_canal_privado_y_version_vigente(version_del_paquete: s
 
 def test_el_changelog_tiene_la_entrada_de_la_version(version_del_paquete: str, cff: dict):
     changelog = leer("CHANGELOG.md")
-    # La fecha de la versión es la de publicación de `CITATION.cff` y la de la exportación de
-    # `PROCEDENCIA.md`: los tres hablan del mismo día y así no se pueden separar.
+    # La fecha de la versión vigente es la de publicación de `CITATION.cff`. La de la
+    # exportación de `PROCEDENCIA.md` pertenece a la 1.0.0 y se ata a su propia entrada.
     assert f"## [{version_del_paquete}] - {cff['date-released']}" in changelog
     assert "Keep a Changelog" in changelog
     for seccion in ("### Añadido", "### Cambiado", "### Corregido", "### Quitado"):
