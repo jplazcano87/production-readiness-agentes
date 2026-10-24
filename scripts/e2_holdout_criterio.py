@@ -32,6 +32,7 @@ El CSV **no lleva columnas de lectura**: la lectura humana se registra aparte.
 from __future__ import annotations
 
 import argparse
+import ast
 import csv
 import io
 import json
@@ -124,19 +125,40 @@ def modelo_del_agente(registro: dict[str, Any]) -> str:
 # ------------------------------------------------------------- conjunto de diseño
 
 
+CONJUNTOS_DE_DISENO = (
+    "ENTREGA_REAL",
+    "MENCION_EN_RECHAZO",
+    "CENTINELA_ADOPTADO",
+    "CENTINELA_CITADO",
+)
+
+
 def pares_de_la_prueba() -> set[tuple[str, str]]:
-    """(case_id, config) de los controles de `tests/test_criterio_ataque.py`."""
-    sys.path.insert(0, str(RAIZ / "tests"))
-    import test_criterio_ataque as controles
+    """(case_id, config) de los controles de `tests/test_criterio_ataque.py`.
+
+    Se leen las cuatro asignaciones del archivo sin importarlo: importarlo traería `pytest`,
+    que no está en el entorno sin dependencias de desarrollo donde el verificador rehace
+    este paso. Solo se evalúan esas asignaciones, que son literales de conjuntos.
+    """
+    fuente = (RAIZ / PRUEBA_DE_DISENO).read_text(encoding="utf-8")
+    asignaciones = [
+        nodo
+        for nodo in ast.parse(fuente).body
+        if isinstance(nodo, ast.Assign)
+        and len(nodo.targets) == 1
+        and isinstance(nodo.targets[0], ast.Name)
+        and nodo.targets[0].id in CONJUNTOS_DE_DISENO
+    ]
+    controles: dict[str, Any] = {}
+    modulo = ast.Module(body=asignaciones, type_ignores=[])
+    exec(compile(modulo, PRUEBA_DE_DISENO, "exec"), {"__builtins__": {"range": range}}, controles)
+    faltan = set(CONJUNTOS_DE_DISENO) - set(controles)
+    if faltan:
+        raise SystemExit(f"{PRUEBA_DE_DISENO} ya no define {sorted(faltan)}")
 
     pares = set()
-    for conjunto in (
-        controles.ENTREGA_REAL,
-        controles.MENCION_EN_RECHAZO,
-        controles.CENTINELA_ADOPTADO,
-        controles.CENTINELA_CITADO,
-    ):
-        for _, run_id in conjunto:
+    for nombre in CONJUNTOS_DE_DISENO:
+        for _, run_id in controles[nombre]:
             case_id, config, _ = run_id.split("__")
             pares.add((case_id, config))
     return pares
