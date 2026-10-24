@@ -123,8 +123,10 @@ cambiado mientras tanto. Lo que hace cada paso está en
    el planificador, el simulador de usuario y el juez.
 2. **`--dry-run` primero, siempre.** Imprime tokens y costo estimado en dólares sin llamar a
    nada. Después un piloto corto, y solo entonces la corrida completa. La compuerta de
-   pre-vuelo (`scripts/prevuelo.py`) hace trece comprobaciones antes de gastar en una corrida
-   larga.
+   pre-vuelo (`scripts/prevuelo.py`) comprueba el arnés antes de gastar en una corrida larga:
+   primero las comprobaciones estáticas, sin llamar a la API; después las dinámicas, sobre una
+   muestra pequeña de las cuatro configuraciones; y al final, que el costo real quede dentro del
+   20 % del estimado.
 3. **El costo lo asume quien contribuye.** No hay presupuesto del proyecto.
 4. La clave va en `ANTHROPIC_API_KEY`, dentro de un `.env` que **nunca se versiona**.
    `.env.example` lista las variables sin valores. Si subes una clave por accidente, revócala

@@ -108,7 +108,9 @@ dólares sin llamar a nada. **Se ejecuta primero, siempre.** La clave va en `ANT
 dentro de un `.env` que nunca se versiona; `.env.example` lista las variables sin valores.
 
 Quien contribuya asume el costo de sus propias corridas. La compuerta de pre-vuelo
-(`scripts/prevuelo.py`) hace trece comprobaciones antes de gastar en una corrida larga.
+(`scripts/prevuelo.py`) comprueba el arnés antes de gastar en una corrida larga: primero las
+comprobaciones estáticas, sin llamar a la API; después las dinámicas, sobre una muestra pequeña
+de las cuatro configuraciones; y al final, que el costo real quede dentro del 20 % del estimado.
 
 Los recálculos que **no** llaman a la API —reaplicar el evaluador, reclasificar con un criterio
 nuevo, consolidar el veredicto, generar tablas y figuras— están en el README y son los que el

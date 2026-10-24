@@ -480,7 +480,7 @@ no separa el contenido de esas respuestas de su legibilidad.
 | **Corpus v1.3** (30 intenciones, dos veces) | **0,04** | incidencias del `MANIFEST.json` |
 | **E2 portador descripción** (prueba) | **5,20** | `results/e2_portador_descripcion.json` |
 | **E4 caso nuevo `CUM-026`** | **≈ 0,59** | cota inferior; ver abajo |
-| E5 veredicto, reverificación de E4, reclasificación de E2, vista combinada, retroactivo de E1 | 0,00 | todos con `api_mode: none` |
+| E5 veredicto, reverificación de E4, reclasificación de E2, vista combinada, retroactivo de E1 | 0,00 | no llamaron a la API; las copias de E4 heredan la metadata del original, con su costo, y se cuentan una sola vez |
 | **Total de las corridas finales** | **≈ 113,92** | |
 
 La fila de `CUM-026` es la única que **no es exacta**, y el motivo es la reanudación: las cuatro
@@ -491,13 +491,28 @@ veinte transcripciones quedaron en disco y el resultado se ensambló después a 
 
 ### Total del proyecto
 
-**USD ≈ 275,26**, de `metadata.costo_usd_real` de cada JSON descontando las copias derivadas que
-arrastran el costo del original (las reclasificaciones, reverificaciones y vistas combinadas no
-gastaron nada: su `api_mode` es `none`).
+**USD ≈ 275,26.** Sale de `metadata.costo_usd_real` **contando una sola vez cada corrida**: las
+copias derivadas (reverificaciones, reclasificaciones, vistas combinadas y la copia redactada)
+repiten el costo y la marca de tiempo del original, y no todas declaran `api_mode: none`, así que
+se reconocen por el par de costo y `timestamp`. A eso se suma el gasto que no está en ninguna
+metadata: los dos pre-vuelos (2,6422 y 2,5995, en el cuerpo de sus archivos), la prueba de humo
+(0,1669, en `uso_acumulado` de `results/smoke_api.json`), la redacción del corpus v1.3 (0,04,
+en las incidencias de su `MANIFEST.json`) y la cota inferior de `CUM-026` (≈ 0,59):
+
+| | USD |
+|---|---:|
+| 44 corridas, cada una contada una vez | 269,22 |
+| Gasto fuera de la metadata | 6,04 |
+| **Total** | **275,26** |
+
+Las 44 corridas incluyen resultados intermedios que este repositorio no publica: de los 269,22,
+115,17 están en JSON publicados y 154,05 en retirados. El detalle, con el archivo, el commit y la
+huella de lo que no se publica, está en
+[`PROCEDENCIA.md`](PROCEDENCIA.md#cifras-del-informe-que-se-apoyan-en-el-repositorio-de-desarrollo).
 
 De ese total, **≈ USD 161,34 son diagnósticos, calibración y corridas superadas** que no entran
-en el informe: **el 59 % del gasto fue aprender qué medir**, no medirlo. La calibración del
-portador descripción añade 2,03 a esa cifra (tres rondas de 27 ejecuciones sobre `none`).
+en el informe: **el 59 % del gasto fue aprender qué medir**, no medirlo. Esa cifra **incluye** los
+2,03 de la calibración del portador descripción (tres rondas de 27 ejecuciones sobre `none`).
 
 ---
 

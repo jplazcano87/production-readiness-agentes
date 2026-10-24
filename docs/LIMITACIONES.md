@@ -86,7 +86,7 @@ sí se corrigieron están en [`REGISTRO_DE_DEFECTOS.md`](REGISTRO_DE_DEFECTOS.md
     catálogo. *La métrica basada en estado no coincide con lo que un lector consideraría
     resuelto, y tampoco lo acota: la anotación a ciegas encontró ejecuciones que el evaluador
     reprueba y la persona aprueba (12 de 64) y otras que el evaluador aprueba y la persona
-    rechaza (4 de 64). No es una cota inferior en ninguna dirección.*
+    rechaza (4 de 64). No la acota en ninguna dirección.*
 
 15. **Nombrar el portador no garantiza que el agente lo resuelva al producto correcto.** La
     corrida de la segunda superficie cerró con una tasa de entrega de 0,952: las tres
