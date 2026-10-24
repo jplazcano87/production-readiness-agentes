@@ -156,7 +156,7 @@ def build_metadata(
 
     `agent_version` identifica la versión del agente que produjo el resultado —prompts,
     defensas y forma de acreditar el estado final—. Sin ella, dos corridas del mismo
-    experimento pueden diferir sin que el JSON diga por qué; ocurrió entre las cuatro
+    experimento pueden diferir sin que el JSON diga por qué; ocurrió entre las seis
     corridas de E1. Por omisión toma la versión del
     código instalado.
 

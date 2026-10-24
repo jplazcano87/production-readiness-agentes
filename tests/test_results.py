@@ -158,7 +158,7 @@ def test_write_result_exige_api_mode(tmp_path):
 
 
 def test_la_version_del_agente_queda_en_los_metadatos():
-    # Entre las cuatro corridas de E1 cambió el agente sin que el JSON lo dijera.
+    # Entre las seis corridas de E1 cambió el agente sin que el JSON lo dijera.
     metadata = build_metadata(
         seed=1, model="m", config="none", corpus_version="v1.0", api_mode="none"
     )

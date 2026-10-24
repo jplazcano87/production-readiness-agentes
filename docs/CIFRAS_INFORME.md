@@ -260,7 +260,11 @@ Fuentes: `results/e3_latency.json` (en frío, la que la política nombra) y
 
 El umbral que **vincula** es el sobrecosto (≤ 2,0×) y lo incumple solo `cte`. El absoluto
 ≤ 1,5 s es objetivo reportado y lo incumplen las cuatro. No se observó efecto de la caché sobre
-el TTFT: las dos corridas difieren menos entre sí que dos corridas del mismo código. El sobrecosto se lee de `dimensiones.operacion.reglas` del veredicto, no de dividir los p95 a mano.
+el TTFT: las dos corridas difieren menos entre sí que las dos corridas en frío de `none`, con p95
+de 5,55 s y 2,20 s, que tuvieron el mismo diseño, el mismo prefijo de catálogo y las mismas
+condiciones de caché y streaming, separadas por el paso del agente 2.2.0 al 3.0.1 (ver
+[`PROCEDENCIA.md`](PROCEDENCIA.md#el-mismo-código-las-dos-corridas-de-latencia-en-frío-no-lo-eran)). El sobrecosto se lee de `dimensiones.operacion.reglas` del veredicto, no
+de dividir los p95 a mano.
 
 ---
 
@@ -506,7 +510,10 @@ en las incidencias de su `MANIFEST.json`) y la cota inferior de `CUM-026` (≈ 0
 | **Total** | **275,26** |
 
 Las 44 corridas incluyen resultados intermedios que este repositorio no publica: de los 269,22,
-115,17 están en JSON publicados y 154,05 en retirados. El detalle, con el archivo, el commit y la
+115,28 están en JSON publicados y 153,94 en retirados. La copia redactada
+`results/e4_compliance_cte_v2.0.0.redactado.json` repite el costo de su original retenido
+(0,11), y por eso el reparto calculado sobre el repositorio privado, que lo cuenta con el
+original, da 115,17 y 154,05; el total no cambia. El detalle, con el archivo, el commit y la
 huella de lo que no se publica, está en
 [`PROCEDENCIA.md`](PROCEDENCIA.md#cifras-del-informe-que-se-apoyan-en-el-repositorio-de-desarrollo).
 
