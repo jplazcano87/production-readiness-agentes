@@ -262,7 +262,7 @@ El software está archivado en Zenodo y tiene DOI. Para citar **cualquier versi�
 [10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). Para citar una versión concreta, el de esa versión: la 1.0.0,
 [10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717); la 1.1.0,
 [10.5281/zenodo.23627444](https://doi.org/10.5281/zenodo.23627444). La versión más reciente es la
-1.1.1; su DOI se agregará aquí cuando se publique.
+1.1.1: [10.5281/zenodo.23628316](https://doi.org/10.5281/zenodo.23628316).
 
 ## Licencia
 
