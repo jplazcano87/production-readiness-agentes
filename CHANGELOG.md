@@ -20,6 +20,28 @@ metadata de cada resultado, y describen con qué se midió.
   `docs/DATASHEET.md`. `CITATION.cff` sigue con el de todas las versiones,
   `10.5281/zenodo.23403716`, que también vale para las siguientes.
 
+### Corregido
+
+`docs/CIFRAS_INFORME.md` se escribió contra un borrador anterior del informe y se alinea con la
+versión final. **Ninguna cifra, ninguna fuente citada y ningún artefacto congelado cambia**:
+`docs/MANIFIESTO_ARTEFACTOS.json` queda igual y solo cambia cómo el documento se refiere al
+informe.
+
+- La numeración de tablas y figuras sigue la del informe final: la composición de los ataques es
+  la Figura 3; la latencia pasa a ser parte de la Tabla 6; el cumplimiento es la Tabla 7; la
+  concordancia de E6, la Tabla 11; el ASR por portador deja de llevar número de tabla, porque el
+  informe lo da en el texto de 5.1 y en la nota de la Tabla 6; y la sensibilidad al modelo se
+  rotula como parte de la Tabla 10. Las secciones no se reordenan ni se mueven cifras entre ellas.
+- Tabla de correspondencia al principio: cada tabla y figura del informe final, con la sección
+  que la alimenta y su archivo fuente. Las Tablas 1 y 9 no tienen fuente en el repositorio.
+- §7 bis, §8 bis: tres pasajes describían el borrador anterior y ahora describen el informe final.
+  El criterio humano que el borrador daba por más laxo que el evaluador, y que la anotación a
+  ciegas no confirmó; el hold-out, donde el informe final cita la relectura a ciegas y no la
+  lectura original del autor, que queda rotulada como la del borrador; y la auditoría de falsos
+  negativos, donde cita la repetición prerregistrada y no la muestra original, que no se
+  conservó.
+- Las frases escritas como instrucciones para redactar el informe pasan a describir el documento.
+
 ## [1.1.0] - 2026-10-24
 
 Los artefactos medidos son los mismos de la 1.0.0: ningún resultado, transcripción, archivo del
