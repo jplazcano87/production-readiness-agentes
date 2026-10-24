@@ -28,9 +28,10 @@ el plan por etapas y material de proceso que no pertenece a una publicación.
 Nada más cambia entre ese commit y el que se exporta, y la verificación de la exportación lo
 comprueba archivo por archivo: si el diff trae un cuarto, falla.
 
-Lo que esa tabla y esta frase no inventan está en los archivos de siempre: la fecha de
-publicación en `CITATION.cff`, la misma fecha en la entrada 1.0.0 de `CHANGELOG.md`, y una prueba
-que exige que las tres coincidan.
+Lo que esa tabla y esta frase no inventan está en los archivos de siempre: la fecha de la
+exportación es la de la entrada 1.0.0 de `CHANGELOG.md`, y una prueba exige que coincidan.
+`CITATION.cff` lleva la fecha de la versión vigente, que la entrada de esa versión en el
+`CHANGELOG.md` repite; la exportación es un hecho de la 1.0.0 y no cambia con ella.
 
 ## Qué generó cada artefacto
 

@@ -14,12 +14,19 @@ metadata de cada resultado, y describen con qué se midió.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-24
+
+Los artefactos medidos son los mismos de la 1.0.0: ningún resultado, transcripción, archivo del
+corpus ni texto de prompt cambia. `docs/MANIFIESTO_ARTEFACTOS.json` solo ganó entradas, de 118 a
+124, y el verificador de equivalencia lo comprueba
+(`python scripts/verificar_equivalencia.py --completo`).
+
 ### Añadido
 
 - El DOI de Zenodo en `CITATION.cff` y en los dos README: el de todas las versiones,
-  `10.5281/zenodo.23403716`, y el de la versión 1.0.0, `10.5281/zenodo.23403717`. El registro de Zenodo se creó desde la
-  release `v1.0.0`, que es el commit que publica esta versión; la entrada de abajo no cambia,
-  porque el software publicado es el mismo.
+  `10.5281/zenodo.23403716`, y el de la versión 1.0.0, `10.5281/zenodo.23403717`. El registro de
+  Zenodo se creó desde la release `v1.0.0`; la entrada 1.0.0 de abajo no cambia, porque el
+  software publicado en ella es el mismo. El DOI de la 1.1.0 se agregará cuando Zenodo lo genere.
 - **La validación del criterio de ataque 1.2.0, reproducible desde el repositorio**, en
   `data/annotation/criterio_1.2.0/`:
   - la lista del **hold-out**: las 40 candidatas de la raíz de `results/runs_e2/`, las 4
@@ -45,54 +52,48 @@ metadata de cada resultado, y describen con qué se midió.
 ### Corregido
 
 Solo documentación, comentarios y docstrings. **Ningún artefacto congelado cambia y ninguna
-cifra publicada cambia**: `docs/MANIFIESTO_ARTEFACTOS.json` queda igual, y los conteos de 32
-defectos, 16 limitaciones de desarrollo y 7 de alcance siguen valiendo.
+cifra publicada cambia**: ninguna entrada que el manifiesto ya tenía se modifica (las únicas
+novedades son las seis de arriba), ningún script cuyo resultado rehace el verificador cambia, y
+los conteos de 32 defectos, 16 limitaciones de desarrollo y 7 de alcance siguen valiendo.
 
 - `docs/CIFRAS_INFORME.md` §7, `docs/LIMITACIONES.md` (limitación 14) y una nota al pie de
   `docs/REGISTRO_DE_DEFECTOS.md` sobre el defecto 19: pass^k deja de presentarse como cota
   inferior de la utilidad percibida, como ya hacía el README. La fila 19 del registro no se
-  reescribe.
+  reescribe. La limitación 14 dice además que no la acota en ninguna dirección.
 - `docs/CIFRAS_INFORME.md` §7: la κ entre juez y anotación del autor es 1,0, como da
   `results/e6_judge_agreement.json`, y no «sin definir».
 - `docs/LIMITACIONES.md` (limitación 2): fueron cinco intenciones, no cuatro casos, como dicen el
   defecto 7 y el manifiesto de v1.1.
 - `docs/DATASHEET.md`: los dos DOI de Zenodo, en lugar de «No hay DOI todavía».
-- `docs/PROCEDENCIA.md`: sección nueva sobre metadatos congelados que se leen con una
+- `docs/PROCEDENCIA.md`, sección nueva sobre metadatos congelados que se leen con una
   corrección: el corpus que declara `results/e2_security_v1.3.json`, las tres versiones de los
   resultados de E4 con el checklist 1.2.0, la versión del agente de E4 en
   `configs/congelado_corrida_final.json`, las 26 transcripciones que son 25, los campos de diseño
-  de `configs/experiments.yaml` y el comentario desactualizado de `src/prf/agent/prompts.py`.
+  de `configs/experiments.yaml`, el comentario desactualizado de `src/prf/agent/prompts.py`, las
+  dos corridas de latencia en frío, que no fueron «del mismo código», qué sostiene el comentario
+  de `data/templates/attacks/dev/direct.yaml`, cuándo se escribió la calibración de
+  `docs/E2_PORTADOR_PREREGISTRO.md` y a qué `CLAUDE.md` remite `configs/models.yaml`.
+- `docs/PROCEDENCIA.md`, sección nueva, «Cifras del informe que se apoyan en el repositorio de
+  desarrollo». Para cada cifra que el informe marca como «registro de desarrollo» da el archivo
+  del repositorio privado, el commit, la fecha y el SHA-256, más las cinco versiones del
+  pre-vuelo con qué corrida cubre cada pase y las horas del criterio de salida de las
+  calibraciones.
+- `docs/CIFRAS_INFORME.md` §8: la regla del costo total, que cuenta una sola vez cada corrida y
+  suma el gasto que no está en ninguna metadata, con el desglose 269,22 + 6,04 = 275,26. Los
+  2,03 de la calibración del portador están **dentro** de los 161,34, no se suman a ellos.
 - `docs/CIFRAS_INFORME.md` §8 bis: el 0/27 de la ronda 2 de calibración del portador descripción
   es con el criterio 1.2.0; el archivo guarda la lectura literal, 1/27.
 - `docs/CIFRAS_INFORME.md`, tabla 3: nota sobre `unauthorized_promise`, que se mide por la
   invocación efectiva de `apply_discount` o `send_message` y no por lo que la respuesta promete.
 - README, en los dos idiomas: qué lleva el system prompt de cada configuración, incluido el
   párrafo de advertencia que también recibe `dual_llm`, y la temperatura de cada rol.
+- README en los dos idiomas, `AGENTS.md`, `CONTRIBUTING.md` y `docs/REPRODUCIBILIDAD.md`: el
+  pre-vuelo se describe por lo que hace, estáticas, dinámicas y control de costo, en lugar de
+  «trece comprobaciones», que no es un número que el código distinga.
 - `scripts/calibrate_thresholds.py` y un comentario de `tests/test_config.py`: la cifra del umbral
   descartado es 0,914, la del changelog de `configs/thresholds.yaml`, y la precisión es ±0,02.
 - `data/generators/casos_seguridad.py`: el docstring de `correo_simulado` ya no dice que
   `example.cl` esté reservado. El código no cambia.
-
-Las cifras que se apoyan en el repositorio de desarrollo, también solo documentación. **Ningún
-artefacto congelado cambia y ninguna cifra publicada cambia**: `docs/MANIFIESTO_ARTEFACTOS.json`
-queda igual, y tampoco cambia ningún script cuyo resultado rehace el verificador.
-
-- `docs/PROCEDENCIA.md`: sección nueva, «Cifras del informe que se apoyan en el repositorio de
-  desarrollo». Para cada cifra que el informe marca como «registro de desarrollo» da el archivo
-  del repositorio privado, el commit, la fecha y el SHA-256, más las cinco versiones del
-  pre-vuelo con qué corrida cubre cada pase y las horas del criterio de salida de las
-  calibraciones.
-- `docs/PROCEDENCIA.md`, «Metadatos congelados que se leen con una corrección»: las dos corridas
-  de latencia en frío no fueron «del mismo código»; qué sostiene el comentario de
-  `data/templates/attacks/dev/direct.yaml`; cuándo se escribió la calibración de
-  `docs/E2_PORTADOR_PREREGISTRO.md`; y a qué `CLAUDE.md` remite `configs/models.yaml`.
-- `docs/CIFRAS_INFORME.md` §8: la regla del costo total, que cuenta una sola vez cada corrida y
-  suma el gasto que no está en ninguna metadata, con el desglose 269,22 + 6,04 = 275,26. Los
-  2,03 de la calibración del portador están **dentro** de los 161,34, no se suman a ellos.
-- README en los dos idiomas, `AGENTS.md`, `CONTRIBUTING.md` y `docs/REPRODUCIBILIDAD.md`: el
-  pre-vuelo se describe por lo que hace, estáticas, dinámicas y control de costo, en lugar de
-  «trece comprobaciones», que no es un número que el código distinga.
-- `docs/LIMITACIONES.md` (limitación 14): «No la acota en ninguna dirección».
 
 ## [1.0.0] - 2026-10-15
 

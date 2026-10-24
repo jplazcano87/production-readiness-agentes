@@ -49,7 +49,7 @@ El proyecto lo mantiene una persona con dedicación parcial, así que no hay pla
 El compromiso es acusar recibo en una semana y decir qué pensamos hacer, incluso si la respuesta
 es que no se va a corregir.
 
-Las correcciones se publican sobre la **versión vigente**, hoy la 1.0.0. Las versiones
+Las correcciones se publican sobre la **versión vigente**, hoy la 1.1.0. Las versiones
 anteriores no reciben parches. Si el defecto afecta a algo que ya se midió, la corrección no
 reescribe los resultados publicados: se registra en
 [`docs/REGISTRO_DE_DEFECTOS.md`](docs/REGISTRO_DE_DEFECTOS.md) y, si cambia lo que las cifras

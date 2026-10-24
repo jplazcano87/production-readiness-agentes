@@ -256,8 +256,9 @@ thesis is in Spanish, so its title is given as it is, with a translation in brac
 > Intelligence, Pontificia Universidad Católica de Chile.
 
 The software is archived on Zenodo and has a DOI. To cite **any version**, use the concept DOI:
-[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). To cite **this one**, use the DOI of version 1.0.0:
-[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717).
+[10.5281/zenodo.23403716](https://doi.org/10.5281/zenodo.23403716). To cite version 1.0.0, use the DOI of that version:
+[10.5281/zenodo.23403717](https://doi.org/10.5281/zenodo.23403717). The latest version is 1.1.0;
+its DOI will be added here once it is published.
 
 ## License
 
