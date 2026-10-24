@@ -104,7 +104,7 @@ hecho, las mismas conclusiones dentro de los intervalos publicados.
 
 ```bash
 python scripts/run_e1.py --dry-run     # siempre primero
-python scripts/prevuelo.py             # trece comprobaciones antes de gastar
+python scripts/prevuelo.py             # estáticas, dinámicas y costo, antes de gastar
 python scripts/run_e1.py
 ```
 

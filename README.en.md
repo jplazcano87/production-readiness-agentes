@@ -189,8 +189,10 @@ python scripts/run_e1.py               # the full run
 ```
 
 Each result records in its metadata the tokens consumed and the real cost of that run, so the
-file states what it cost to produce. The pre-flight gate (`scripts/prevuelo.py`) runs thirteen
-checks before spending on a long run.
+file states what it cost to produce. The pre-flight gate (`scripts/prevuelo.py`) checks the harness
+before spending on a long run: first the static checks, without calling the API; then the
+dynamic ones, on a small sample of the four configurations; and finally, that the real cost
+stays within 20 % of the estimate.
 
 ## Layout
 

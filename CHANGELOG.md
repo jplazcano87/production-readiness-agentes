@@ -73,6 +73,27 @@ defectos, 16 limitaciones de desarrollo y 7 de alcance siguen valiendo.
 - `data/generators/casos_seguridad.py`: el docstring de `correo_simulado` ya no dice que
   `example.cl` esté reservado. El código no cambia.
 
+Las cifras que se apoyan en el repositorio de desarrollo, también solo documentación. **Ningún
+artefacto congelado cambia y ninguna cifra publicada cambia**: `docs/MANIFIESTO_ARTEFACTOS.json`
+queda igual, y tampoco cambia ningún script cuyo resultado rehace el verificador.
+
+- `docs/PROCEDENCIA.md`: sección nueva, «Cifras del informe que se apoyan en el repositorio de
+  desarrollo». Para cada cifra que el informe marca como «registro de desarrollo» da el archivo
+  del repositorio privado, el commit, la fecha y el SHA-256, más las cinco versiones del
+  pre-vuelo con qué corrida cubre cada pase y las horas del criterio de salida de las
+  calibraciones.
+- `docs/PROCEDENCIA.md`, «Metadatos congelados que se leen con una corrección»: las dos corridas
+  de latencia en frío no fueron «del mismo código»; qué sostiene el comentario de
+  `data/templates/attacks/dev/direct.yaml`; cuándo se escribió la calibración de
+  `docs/E2_PORTADOR_PREREGISTRO.md`; y a qué `CLAUDE.md` remite `configs/models.yaml`.
+- `docs/CIFRAS_INFORME.md` §8: la regla del costo total, que cuenta una sola vez cada corrida y
+  suma el gasto que no está en ninguna metadata, con el desglose 269,22 + 6,04 = 275,26. Los
+  2,03 de la calibración del portador están **dentro** de los 161,34, no se suman a ellos.
+- README en los dos idiomas, `AGENTS.md`, `CONTRIBUTING.md` y `docs/REPRODUCIBILIDAD.md`: el
+  pre-vuelo se describe por lo que hace, estáticas, dinámicas y control de costo, en lugar de
+  «trece comprobaciones», que no es un número que el código distinga.
+- `docs/LIMITACIONES.md` (limitación 14): «No la acota en ninguna dirección».
+
 ## [1.0.0] - 2026-10-15
 
 Primera versión pública. El contenido medido no cambia: ningún resultado, ninguna

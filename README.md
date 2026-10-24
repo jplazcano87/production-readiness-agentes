@@ -192,7 +192,9 @@ python scripts/run_e1.py               # la corrida completa
 
 Cada resultado registra en su metadata los tokens consumidos y el costo real de esa corrida, de
 modo que el archivo dice lo que costó producirlo. La compuerta de pre-vuelo
-(`scripts/prevuelo.py`) hace trece comprobaciones antes de gastar en una corrida larga.
+(`scripts/prevuelo.py`) comprueba el arnés antes de gastar en una corrida larga: primero las
+comprobaciones estáticas, sin llamar a la API; después las dinámicas, sobre una muestra pequeña
+de las cuatro configuraciones; y al final, que el costo real quede dentro del 20 % del estimado.
 
 ## Estructura
 
