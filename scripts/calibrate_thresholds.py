@@ -19,8 +19,10 @@ Dos cambios sobre la política vigente:
 **`pass_k_1.min` se mantiene en 0,85.** Se evaluó derivarlo del límite inferior del IC de la
 línea base menos el margen: con `results/e1_baseline.json` eso es 0,964 - 0,05 = **0,914**, la
 cifra que el changelog de `configs/thresholds.yaml` registra, porque la escribe este mismo
-script. Una versión anterior de este docstring decía 0,783; no sale de ningún resultado
-publicado y no se puede recalcular desde el repositorio. Se descartó: anclar el umbral a
+script. Una versión anterior de este docstring decía 0,783, que es la misma cuenta sobre la
+primera línea base, la del corpus v1.0: 0,8333 - 0,05. Ese resultado, `e1_baseline_v1.0`, es
+uno de los intermedios que el registro de cambios declara retirados, así que la cifra no se
+puede recalcular desde este repositorio. Se descartó: anclar el umbral a
 lo que el agente evaluado consigue convierte la política en una descripción de ese agente y
 no en una exigencia sobre él. Un agente peor bajaría el listón y aprobaría igual, que es
 exactamente lo que un umbral existe para impedir. El detalle queda en el changelog.
