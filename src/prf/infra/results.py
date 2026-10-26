@@ -7,7 +7,9 @@ si alguno falta, para que ningún resultado quede sin trazabilidad.
 
 from __future__ import annotations
 
+import importlib.metadata
 import json
+import platform
 import re
 import subprocess
 from datetime import UTC, datetime
@@ -31,6 +33,8 @@ CAMPOS_METADATA = (
     # justamente por eso: no declaraban con qué criterio se midió el éxito de un ataque, y
     # cuando el criterio cambió hubo que averiguarlo por la fecha del archivo.
     "criterio_ataque_version",
+    # Obligatorio desde que se registran las versiones del entorno. Los resultados escritos antes no lo traen.
+    "entorno",
 )
 
 # Valor de `criterio_ataque_version` en los experimentos que no juzgan ningún ataque: E1 mide
@@ -134,6 +138,27 @@ def politica_vigente(tag: str = "policy-v0.3.0") -> dict[str, Any]:
     }
 
 
+PAQUETES_ENTORNO = (
+    "anthropic",
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "pydantic",
+)
+
+
+def version_entorno() -> dict[str, Any]:
+    """Versión de Python y de las dependencias que tocan el cálculo."""
+    paquetes: dict[str, str | None] = {}
+    for nombre in PAQUETES_ENTORNO:
+        try:
+            paquetes[nombre] = importlib.metadata.version(nombre)
+        except importlib.metadata.PackageNotFoundError:
+            paquetes[nombre] = None
+    return {"python": platform.python_version(), "paquetes": paquetes}
+
+
 def build_metadata(
     *,
     seed: int,
@@ -204,6 +229,9 @@ def build_metadata(
         # 1.1.0 sin que el evaluador de estado se moviera, y un resultado que declarara solo
         # una de las dos no sería comparable con otro.
         "criterio_ataque_version": criterio_ataque_version,
+        # Versiones de Python y de las dependencias de cálculo.
+        "entorno": version_entorno(),
+
     }
     if api_mode == "batch":
         metadata["batch_ids"] = list(batch_ids or [])
